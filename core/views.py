@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth.models import User
-from django.contrib import messages, auth
+from django.contrib.auth.models import User, auth
+from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . models import Profile
@@ -24,21 +24,23 @@ def signup(request):
                 messages.info(request, 'This username is already taken.')
                 return redirect('signup')
             else:
+                # Create the user. 
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
-                # Log user in and redirect the settings page.
-
+                # Log the user in using the credentials.
+                user_credentials = auth.authenticate(username=username, password=password)
+                auth.login(request, user_credentials)
                 # Create a Profile object for the new user.
                 user_model = User.objects.get(username=username)
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
-                return redirect('signup')
+                # Redirect the user to the settings page.
+                return redirect('settings')
         else: 
             messages.info(request, 'Password don\'t match.')
             return redirect('signup')
     else: 
         return render(request, 'signup.html')
-
 
 def signin(request):
     if request.method == 'POST':
@@ -63,3 +65,36 @@ def logout(request):
     auth.logout(request)
     return redirect('signin')
 
+@login_required(login_url='signin')
+def settings(request):
+    user_profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        if request.FILES.get('profile_image') == None:
+            # If the user didn't upload their own image
+            # Use the default profile image.
+            image = user_profile.profile_image
+            bio = request.POST['bio']
+            location = request.POST['location']
+
+            # Update the model
+            user_profile.profile_image = image
+            user_profile.bio = bio
+            user_profile.location = location
+            user_profile.save()
+        if request.FILES.get('profile_image') != None:
+            image = request.FILES.get('profile_image')
+            bio = request.POST['bio']
+            location = request.POST['location']
+
+            # Update the model
+            user_profile.profile_image = image
+            user_profile.bio = bio
+            user_profile.location = location
+            user_profile.save()
+
+        return redirect('settings')
+
+    return render(request, 'settings.html', {
+        'user_profile': user_profile,
+    })
