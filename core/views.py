@@ -2,8 +2,10 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib import messages, auth
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from . models import Profile
 
+@login_required(login_url='signin')
 def index(request):
     return render(request, 'index.html')
 
@@ -56,7 +58,8 @@ def signin(request):
     else:
         return render(request, 'signin.html')   
     
-
+@login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
     return redirect('signin')
+
