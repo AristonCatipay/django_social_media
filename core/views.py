@@ -118,4 +118,7 @@ def upload(request):
         return redirect('index')
     else:
         return redirect('index')
-    
+
+@login_required(login_url='signin')
+def like_post(request):
+    return redirect('index')   
