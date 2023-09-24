@@ -43,8 +43,12 @@
 						{% csrf_token %}
 						<input type="hidden" value="{{ user.username }}" name="follower_username">
 						<input type="hidden" value="{{ user_object.username }}" name="leader_username">
-						<a href="" title="" data-ripple=""><button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">Follow</button></a>
+					{% if user_object.username == user.username %}
+						<a href="{% url 'settings' %}" style="background-color: #ffc0cb; border: #ffc0cb;">Account Settings</a>
+					{% else %}
+						<button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">{{ button_text }}</button>
 					</form>
+					{% endif %}
 				</div>
 
 				<!-- <form class="edit-phto">
