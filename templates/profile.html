@@ -29,6 +29,7 @@
 				<figure><img src="{% static 'images/resources/timeline-1.jpg' %}" alt=""></figure>
 				<div class="add-btn">
 					<span style="color: white; font-size: 27px; margin-right: 300px;"><b><u><a href="/">Home</a></u></b></span>
+					
 					{% if user_posts_length == 0 %}
 					<span style="color: white; font-size: 27px;"><b>No Post</b></span>
 					{% elif user_posts_length == 1 %}
@@ -36,8 +37,14 @@
 					{% else %}
 					<span style="color: white; font-size: 27px;"><b>{{ user_posts_length }} Posts</b></span>
 					{% endif %}
-					<span style="color: white; font-size: 27px;"><b>1.7m followers</b></span>
-					<span style="color: white; font-size: 27px;"><b>3.5k following</b></span>
+
+					{% if user_followers == 0 or user_followers == 1%}
+					<span style="color: white; font-size: 27px;"><b>{{ user_followers }} follower</b></span>
+					{% else %}
+					<span style="color: white; font-size: 27px;"><b>{{ user_followers }} followers</b></span>
+					{% endif %}
+
+					<span style="color: white; font-size: 27px;"><b>{{ user_following }} following</b></span>
 
 					<form action="{% url 'follow' %}" method="post">
 						{% csrf_token %}
