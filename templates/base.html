@@ -16,9 +16,10 @@
     <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
         <a href="/" class="text-2xl font-bold">Connectify</a>
         <div class="space-x-6">
-            <a href="{% url 'signup' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:text-teal-700">Register</a>
+            <a href="{% url 'signup' %}" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Register</a>
         </div>
     </nav>
+    
     <div class="px-6 py-6">
         {% block content%}
         {% endblock %}
