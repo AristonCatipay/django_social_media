@@ -16,7 +16,11 @@
     <nav class="py-6 px-6 flex justify-between items-center bg-white dark:bg-gray-900">
         <a href="/" class="text-2xl font-bold whitespace-nowrap dark:text-white">Connectify</a>
         <div class="space-x-6">
+            {% if request.user.is_authenticated %}
+            {% else %}
             <a href="{% url 'signup' %}" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Register</a>
+            <a href="{% url 'signin' %}" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Login</a>
+            {% endif %}
         </div>
     </nav>
     
