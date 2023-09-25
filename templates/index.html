@@ -110,7 +110,7 @@
                                 </div> -->
                             </div>
                             <div class="px-4 py-3 -mx-5 -mb-4 mt-5 border-t text-sm">
-                                Your Video size Must be Maxmium 999MB
+                                Your video size must be maximum of 999MB
                             </div>
                         </div>
                         
@@ -203,7 +203,7 @@
                                             <img src="{{ user_profile.profile_image.url }}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
                                         </div>
                                     </a>
-                                    <span class="block capitalize font-semibold "><a href="#">{{ post.user }}</a></span>
+                                    <span class="block capitalize font-semibold "><a href="{% url 'profile' post.user %}">{{ post.user }}</a></span>
                                 </div>
                               <div>
                                 <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 "></i> </a>
@@ -248,7 +248,7 @@
                                 </a>
                             </div>
 
-                            <div class="p-3 border-b">{{ post.caption }}</div>
+                            <div class="p-3 border-b"><span class="block capitalize font-semibold "><a href="{% url 'profile' post.user %}">{{ post.user }}</a></span> {{ post.caption }}</div>
                             
                             <div class="py-3 px-4 space-y-3"> 
                                 <div class="flex space-x-4 lg:font-bold">

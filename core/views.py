@@ -4,16 +4,30 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . models import Profile, Post, LikePost, Followers
+from itertools import chain
 
 @login_required(login_url='signin')
 def index(request):
     user_object = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user_object)
 
-    posts = Post.objects.all()
+    user_following_list = []
+    user_following_feed = []
+
+    user_following = Followers.objects.filter(follower_username=request.user.username)
+
+    for user in user_following:
+        user_following_list.append(user.leader_username)
+
+    for username in user_following_list:
+        feed_list = Post.objects.filter(user=username)
+        user_following_feed.append(feed_list)
+
+    feed = list(chain(*user_following_feed))    
+
     return render(request, 'index.html', {
         'user_profile': user_profile,
-        'posts': posts,
+        'posts': feed,
     })
 
 def signup(request):
