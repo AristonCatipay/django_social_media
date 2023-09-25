@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . models import Profile, Post, LikePost, Followers
 from itertools import chain
+import random
 
 @login_required(login_url='signin')
 def index(request):
@@ -23,11 +24,39 @@ def index(request):
         feed_list = Post.objects.filter(user=username)
         user_following_feed.append(feed_list)
 
-    feed = list(chain(*user_following_feed))    
+    feed = list(chain(*user_following_feed))
+
+    # Suggestion for users that you can follow.
+    data_of_user_following = []
+    all_users = User.objects.all()
+
+    for user in user_following:
+        user_list = User.objects.get(username=user)
+        data_of_user_following.append(user_list)
+
+    list_of_user_not_yet_followed = [user for user in list(all_users) if (user not in list(data_of_user_following))]
+    current_user = User.objects.filter(username=request.user.username)
+    final_follow_suggestion_list = [user for user in list(list_of_user_not_yet_followed) if (user not in list(current_user))]
+    random.shuffle(final_follow_suggestion_list)
+
+    username_profile = []
+    username_profile_list = []
+
+    for user in final_follow_suggestion_list:
+        username_profile.append(user.id)
+
+    for id in username_profile:
+        profile_list = Profile.objects.filter(id_user=id)
+        username_profile_list.append(profile_list)
+
+    suggestion_username_profile_list = list(chain(*username_profile_list))
+
+
 
     return render(request, 'index.html', {
         'user_profile': user_profile,
         'posts': feed,
+        'suggestion_username_profile_list': suggestion_username_profile_list[:4],
     })
 
 def signup(request):
