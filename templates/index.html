@@ -2,18 +2,12 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
 <div class="container m-auto">
-
-    <!--<h1 class="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-5"> Feed </h1>--->
-
     <div class="lg:flex justify-center lg:space-x-10 lg:space-y-0 space-y-5">
-
         <!-- left sidebar-->
         <div class="space-y-5 flex-shrink-0 lg:w-7/12">
             {% for post in posts reversed%}
-            <!-- post 1-->
-            <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
-
-                <!-- post header-->
+            <div class="bg-white shadow-xl shadow-pink-300/100 rounded-xl">
+                <!-- post header start -->
                 <div class="flex justify-between items-center px-4 py-3">
                     <div class="flex flex-1 items-center space-x-4">
                         <a href="#">
@@ -59,13 +53,14 @@
                     </div>
                     </div>
                 </div>
-
+                <!-- post header end -->
+                <!-- post image start -->
                 <div uk-lightbox>
                     <a href="{{ post.image.url }}">  
                         <img src="{{ post.image.url }}" alt="">
                     </a>
                 </div>
-
+                <!-- post image end -->
                 <div class="p-3 border-b"><span class="block capitalize font-semibold "><a href="{% url 'profile' post.user %}">{{ post.user }}</a></span> {{ post.caption }}</div>
                 
                 <div class="py-3 px-4 space-y-3"> 
@@ -153,10 +148,10 @@
         <!-- right sidebar-->
         <div class="lg:w-5/12">
 
-            <div class="bg-white  shadow-md rounded-md overflow-hidden">
+            <div class="bg-white shadow-xl shadow-pink-300/100 rounded-xl">
 
                 <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
-                    <h2 class="font-semibold text-lg">Users You Can Follow</h2>
+                    <h2 class="font-semibold text-lg">Users you can follow</h2>
                     <a href="#"> Refresh</a>
                 </div>
                 
