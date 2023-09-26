@@ -1,132 +1,39 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'assets/images/favicon.png' %}" rel="icon" type="image/png">
-    <title>Settings - Connectify</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
-
-</head>
-
-<body>
-    <div class="container m-auto"> 
-        <h1 class="text-2xl leading-none text-gray-900 tracking-tight mt-3"><a href="/">Home /</a> Account Setting for <strong>{{ user.username }}</strong></h1>
+{%extends 'base.html'%}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="flex justify-center">
+    <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="flex flex-col items-center pb-10 mt-12">
+                <img class="w-24 h-24 mb-3 object-cover rounded-full shadow-lg" src="{{ user_profile.profile_image.url }}" alt="Bonnie image"/>
+                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ user_profile.user }}</h5>
+                <span class="text-sm text-gray-500 dark:text-gray-400">{{ user_profile.bio }}</span>
+                
+            </div>
         
-        <!-- <ul class="mt-5 -mr-3 flex-nowrap lg:overflow-hidden overflow-x-scroll uk-tab">
-            <li class="uk-active"><a href="#">General</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Notification</a></li>
-            <li><a href="#">Social links</a></li>
-            <li><a href="#">Billing</a></li>
-            <li><a href="#">Security</a></li>
-        </ul> -->
-        <br>
-        <hr>
-
-        <div class="grid lg:grid-cols-3 mt-12 gap-8">
-            <!-- Basic Section -->
-            <div>
-                <h3 class="text-xl mb-2"> Basic</h3>
+            <div class="p-4">    
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload profile image</label>
+                <input name="profile_image" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file">
+                <div class="mt-2 mb-6 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">A profile picture is useful to confirm your are logged into your account</div>
+        
+                
+                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
+                <textarea name="bio" id="message" rows="4" class="block mb-6 p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your bio...">{{ user_profile.bio }}</textarea>
+        
+                
+                <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
+                <input name="location" type="text" id="website-admin" value="{{ user_profile.location }}" class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter you location...">
+        
             </div>
-
-            <div class="bg-white rounded-md lg:shadow-lg shadow col-span-2">
-                <form action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="grid grid-cols-2 gap-3 lg:p-6 p-4">
-                        <div class="col-span-2">
-                            <label>Profile Image</label>
-                            <img width="200" height="200" src="{{ user_profile.profile_image.url }}">
-                            <input type="file" name="profile_image">
-                        </div>
-                        <div class="col-span-2">
-                            <label for="about">Bio</label>  
-                            <textarea id="about" name="bio" rows="3"  class="shadow-none bg-gray-100">{{ user_profile.bio }}</textarea>
-                        </div> 
-                        <div class="col-span-2">
-                            <label for="">Location</label>
-                            <input type="text" name="location" value="{{ user_profile.location }}" class="shadow-none bg-gray-100">
-                        </div>
-                    </div> 
-    
-                    <div class="bg-gray-10 p-6 pt-0 flex justify-end space-x-3">
-                        <button class="p-2 px-4 rounded bg-gray-50 text-red-500"> <a href="/">Cancel</a></button>
-                        <button type="submit" class="button bg-blue-700">Save</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Privacy Section -->
-            <!-- <div>
-                <h3 class="text-xl mb-2"> Privacy</h3>
-            </div> -->
-
-            <!-- <div class="bg-white rounded-md lg:shadow-lg shadow lg:p-6 p-4 col-span-2">
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h4>Who can follow me?</h4>
-                        </div>
-                        <div class="switches-list -mt-8 is-large">
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox"><span class="switch-button"></span> </label>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h4>Show my activities?</h4>
-                        </div>
-                        <div class="switches-list -mt-8 is-large">
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox" checked><span class="switch-button"></span> </label>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h4>Search engines?</h4>
-                        </div>
-                        <div class="switches-list -mt-8 is-large">
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox"><span class="switch-button"></span> </label>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h4>Allow Commenting?</h4>
-                        </div>
-                        <div class="switches-list -mt-8 is-large">
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox"><span class="switch-button"></span> </label>
-                            </div>
-                        </div>
-                    </div>
+        
+            <div class="flex flex-col items-center pb-10 mt-6" >
+                <div class="flex mt-4 space-x-3 md:mt-6">
+                    <a href="/" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Cancel</a>
+                    <button type="submit" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
                 </div>
-            </div> -->
-            <br>
-        </div>
+            </div>
+        </form>
     </div>
-
- <!-- Scripts
-    ================================================== -->
-    <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>  
-    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'assets/js/uikit.js' %}"></script>
-    <script src="{% static 'assets/js/simplebar.js' %}"></script>
-    <script src="{% static 'assets/js/custom.js' %}"></script>
-    <script src="{% static '../../unpkg.com/ionicons%405.2.3/dist/ionicons.js' %}"></script>
-</body>
-</html>
+</div>
+{% endblock %}
