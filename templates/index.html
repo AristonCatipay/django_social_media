@@ -1,52 +1,9 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="favicon.png" rel="icon" type="image/png">
-    <title>Home - Connectify</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
-</head>
-
-<body>
+{%extends 'base.html'%}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
 
             <header>
                 <div class="header_inner">
-                    <!-- Leftside of Header -->
-                    <div class="left-side">
-                        <!-- Logo -->
-                        <div id="logo" class=" uk-hidden@s">
-                            <a href="home.html">
-                                <b><h1 style="text-transform: uppercase;">Connectify</h1></b>
-                            </a>
-                        </div>
-
-                        <!--<div class="triger" uk-toggle="target: #wrapper ; cls: sidebar-active">
-                            <i class="uil-bars"></i>
-                        </div>-->
-                        
-                        <form class="flex items-center" action="{% url 'search' %}" method="post">   
-                            {% csrf_token %}
-                            <div class="relative w-full"> 
-                                <input type="text" name="username" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 rounded-xl" placeholder="Search username..." required>
-                            </div>
-                            <button type="submit" class="inline-flex items-center p-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                               Search
-                            </button>
-                        </form>
-
-                    </div>
-
-
                     <!-- Right side of Header -->
                     <div class="right-side lg:pr-4">
                          <!-- upload -->
@@ -126,7 +83,7 @@
                             <ul class="dropdown_scrollbar" data-simplebar>
                                 <li>
                                     <a href="#">
-                                        <div class="drop_avatar"> <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="">
+                                        <div class="drop_avatar"> <img src="" alt="">
                                         </div>
                                         <div class="drop_content">
                                             <p> <strong class="text-link" >Taiye</strong>  
@@ -154,7 +111,7 @@
                             <ul class="dropdown_scrollbar" data-simplebar>
                                 <li>
                                     <a href="#">
-                                        <div class="drop_avatar"> <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="">
+                                        <div class="drop_avatar"> <img src="" alt="">
                                         </div>
                                         <div class="drop_content">
                                             <strong> Taiye </strong> <time> 6:43 PM</time>
@@ -278,11 +235,11 @@
                                     <div class="flex items-center">
                                         {% if post.no_of_likes == 0 %}
                                         {% elif post.no_of_likes == 1 %}
-                                        <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white ">
+                                        <img src="" alt="" class="w-6 h-6 rounded-full border-2 border-white ">
                                         {% else %}
-                                        <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white ">
-                                        <img src="{% static 'assets/images/avatars/avatar-4.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
-                                        <img src="{% static 'assets/images/avatars/avatar-2.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
+                                        <img src="" alt="" class="w-6 h-6 rounded-full border-2 border-white ">
+                                        <img src="" alt="" class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
+                                        <img src="" alt="" class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
                                         {% endif %}
                                     </div>
                                     <div class="">
@@ -299,7 +256,7 @@
                                 <!-- <div class="border-t pt-4 space-y-4 ">
                                     <div class="flex">
                                         <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                            <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="absolute h-full rounded-full w-full">
+                                            <img src="" alt="" class="absolute h-full rounded-full w-full">
                                         </div>
                                         <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
                                             <p class="leading-6">Y'all like billie eillish? <urna class="i uil-heart"></urna> <i
@@ -309,7 +266,7 @@
                                     </div>
                                     <div class="flex">
                                         <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                            <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="absolute h-full rounded-full w-full">
+                                            <img src="" alt="" class="absolute h-full rounded-full w-full">
                                         </div>
                                         <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
                                             <p class="leading-6">She's my favourite <i class="uil-grin-tongue-wink-alt"></i>
@@ -381,17 +338,4 @@
 
 
 
- <!-- Scripts
-    ================================================== -->
-    <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>  
-    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'assets/js/uikit.js' %}"></script>
-    <script src="{% static 'assets/js/simplebar.js' %}"></script>
-    <script src="{% static 'assets/js/custom.js' %}"></script>
-
-
-    <script src="{% static '../../unpkg.com/ionicons%405.2.3/dist/ionicons.js' %}"></script>
-</body>
-
-
-</html>
+{% endblock %}

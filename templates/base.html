@@ -10,18 +10,66 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Importing font awesome -->
     <script src="https://kit.fontawesome.com/9fc08e307b.js" crossorigin="anonymous"></script>
+    <!-- Importing Flowbite -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
     <title>{% block title %}{% endblock %} | Connectify</title>
 </head>
 <body>
-    <nav class="py-6 px-6 flex justify-between items-center bg-white dark:bg-gray-900">
-        <a href="/" class="text-2xl font-bold whitespace-nowrap dark:text-white">Connectify</a>
-        <div class="space-x-6">
-            {% if request.user.is_authenticated %}
-            {% else %}
-            <a href="{% url 'signup' %}" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Register</a>
-            <a href="{% url 'signin' %}" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Login</a>
-            {% endif %}
+    <nav class="py-6 px-6 grid grid-flow-col justify-stretch items-center bg-white dark:bg-gray-900">
+        <div>
+            <a href="/" class="text-2xl font-bold whitespace-nowrap dark:text-white">Connectify</a>
         </div>
+        
+        {% if request.user.is_authenticated %}
+        <div>
+            <form class="flex items-center" action="{% url 'search' %}" method="post">   
+                {% csrf_token %}
+                <div class="relative w-full"> 
+                    <input type="text" name="username" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 rounded-xl" placeholder="Search username..." required>
+                </div>
+                <button type="submit" class="inline-flex items-center p-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                   Search
+                </button>
+            </form>
+        </div>
+
+        <div class="flex items-center md:order-2 justify-self-end">
+            <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+              <span class="sr-only">Open user menu</span>
+              <img class="w-8 h-8 rounded-full" src="{{ user_profile.profile_image.url }}" alt="user photo">
+            </button>
+            <!-- Dropdown menu -->
+            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+              <div class="px-4 py-3">
+                <span class="block text-sm text-gray-900 dark:text-white">{{ user_profile.user }}</span>
+                <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ user_profile.bio }}</span>
+              </div>
+              <ul class="py-2" aria-labelledby="user-menu-button">
+                <!-- <li>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                </li> -->
+                <li>
+                  <a href="{% url 'settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Account Settings</a>
+                </li>
+                <!-- <li>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
+                </li> -->
+                <li>
+                  <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                </li>
+              </ul>
+            </div>
+            <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
+              <span class="sr-only">Open main menu</span>
+              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+              </svg>
+          </button>
+          {% else %}
+          <a href="{% url 'signup' %}" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Register</a>
+          <a href="{% url 'signin' %}" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Login</a>
+        </div>
+        {% endif %}
     </nav>
     
     <div class="px-6 py-6">
@@ -107,5 +155,6 @@
         </div>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
 </body>
 </html>
