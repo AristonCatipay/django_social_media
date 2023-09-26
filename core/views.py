@@ -257,3 +257,7 @@ def search(request):
         'user_profile': user_profile,
         'username_profile_list': username_profile_list,
     })
+
+@login_required(login_url='signin')
+def post(request):
+    return render(request, 'post.html')
