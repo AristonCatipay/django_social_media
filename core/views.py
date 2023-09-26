@@ -260,4 +260,8 @@ def search(request):
 
 @login_required(login_url='signin')
 def post(request):
-    return render(request, 'post.html')
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user_object)
+    return render(request, 'post.html', {
+        'user_profile': user_profile,
+    })
