@@ -1,156 +1,92 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-	<title>Profile - {{ user_profile.user.username }}</title>
-   <!-- <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> -->
-    
-    <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/color.css' %}">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-
-</head>
-<body>
-<!--<div class="se-pre-con"></div>-->
-<div class="theme-layout">
-	
+{%extends 'base.html'%}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="container flex justify-center mb-10">
+	<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+		<div class="flex justify-end px-4 pt-4">
+			<button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
+				<span class="sr-only">Open dropdown</span>
+				<svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+					<path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+				</svg>
+			</button>
+			<!-- Dropdown menu -->
+			<div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+				<ul class="py-2" aria-labelledby="dropdownButton">
+				<li>
+					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
+				</li>
+				<li>
+					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
+				</li>
+				<li>
+					<a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+				</li>
+				</ul>
+			</div>
+		</div>
+		<div class="flex flex-col items-center pb-10">
+			<img class="w-24 h-24 mb-3 rounded-full shadow-lg object-cover" src="{{ user_profile.profile_image.url }}" alt="Bonnie image"/>
+			<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ user_profile.user.username }}</h5>
+			<span class="text-sm text-gray-500 dark:text-gray-400">{{ user_profile.bio }}</span>
+			<div class="m-4">
+				<ul class="flex text-base">
+					<li class="mr-2">
+						<a href="#" class="hover:underline">
+							<span class="font-semibold text-gray-900 dark:text-white">{{ user_posts_length }}</span>
+							{% if user_posts_length == 0 or user_posts_length == 1 %}
+							<span class="text-gray-400">Post</span>
+							{% else %}
+							<span class="text-gray-400">Posts</span>
+							{% endif %}
+						</a>
+					</li>
+					<li class="mr-2">
+						<a href="#" class="hover:underline">
+							<span class="font-semibold text-gray-900 dark:text-white">{{ user_following }}</span>
+							<span class="text-gray-400">Following</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="hover:underline">
+							<span class="font-semibold text-gray-900 dark:text-white">{{ user_followers }}</span>
+							{% if user_followers == 0 or user_followers == 1%}
+							<span class="text-gray-400">Follower</span>
+							{% else %}
+							<span class="text-gray-400">Followers</span>
+							{% endif %}
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="flex mt-4 space-x-3 md:mt-6">
+				<form action="{% url 'follow' %}" method="post">
+					{% csrf_token %}
+					<input type="hidden" value="{{ user.username }}" name="follower_username">
+					<input type="hidden" value="{{ user_object.username }}" name="leader_username">
+				{% if user_object.username == user.username %}
+					<a href="{% url 'settings' %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Account Settings</a>
+				{% else %}
+					<button type="submit" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ button_text }}</button>
+				</form>
+				{% endif %}
+			</div>
+		</div>
 	</div>
-	
-	<section>
-			<div class="feature-photo">
-				<figure><img src="{% static 'images/resources/timeline-1.jpg' %}" alt=""></figure>
-				<div class="add-btn">
-					<span style="color: white; font-size: 27px; margin-right: 300px;"><b><u><a href="/">Home</a></u></b></span>
-					
-					{% if user_posts_length == 0 %}
-					<span style="color: white; font-size: 27px;"><b>No Post</b></span>
-					{% elif user_posts_length == 1 %}
-					<span style="color: white; font-size: 27px;"><b>{{ user_posts_length }} Post</b></span>
-					{% else %}
-					<span style="color: white; font-size: 27px;"><b>{{ user_posts_length }} Posts</b></span>
-					{% endif %}
+</div>
 
-					{% if user_followers == 0 or user_followers == 1%}
-					<span style="color: white; font-size: 27px;"><b>{{ user_followers }} follower</b></span>
-					{% else %}
-					<span style="color: white; font-size: 27px;"><b>{{ user_followers }} followers</b></span>
-					{% endif %}
-
-					<span style="color: white; font-size: 27px;"><b>{{ user_following }} following</b></span>
-
-					<form action="{% url 'follow' %}" method="post">
-						{% csrf_token %}
-						<input type="hidden" value="{{ user.username }}" name="follower_username">
-						<input type="hidden" value="{{ user_object.username }}" name="leader_username">
-					{% if user_object.username == user.username %}
-						<a href="{% url 'settings' %}" style="background-color: #ffc0cb; border: #ffc0cb;">Account Settings</a>
-					{% else %}
-						<button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">{{ button_text }}</button>
-					</form>
-					{% endif %}
+<div class="col-span-3 rounded-xl">
+	<div class="grid grid-cols-3 gap-3">
+		<!-- Card for each item. -->
+		{% for post in user_posts %}
+		<div class="container">
+			<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+				<div class="flex flex-col items-center mt-8 mb-8">
+					<img class="w-80 h-80 rounded-lg shadow-lg object-cover" src="{{ post.image.url }}" alt="Bonnie image"/>
 				</div>
-
-				<!-- <form class="edit-phto">
-					<i class="fa fa-camera-retro"></i>
-					<label class="fileContainer">
-						Upload Cover Photo
-					<input type="file"/>
-					</label>
-				</form> -->
-				<div class="container-fluid">
-					<div class="row merged">
-						<div class="col-lg-2 col-sm-3">
-							<div class="user-avatar">
-								<figure>
-									<img src="{{ user_profile.profile_image.url }}" style="height: 250px; width: 100%;" alt="">
-									<form class="edit-phto">
-										<i class="fa fa-camera-retro"></i>
-										<label class="fileContainer">
-											<a href="#account-settings">Upload Profile Photo</a>
-										</label>
-									</form>
-								</figure>
-							</div>
-						</div>
-						<div class="col-lg-10 col-sm-9">
-							<div class="timeline-info">
-								<ul>
-									<li class="admin-name">
-									  <h5 style="color: black;white-space: nowrap; width: 110px; font-size: 27px;"><b>@{{ user_profile.user.username }}</b><!--<i class="fa fa-check-circle" style="color: #48dbfb;" aria-hidden="true"></i>--></h5>
-									  <!--<span>Group Admin</span>-->
-									</li>
-									<!--<li>
-										<a class="" href="javascript:void(0)" title="" data-ripple="">Go live!</a>
-										<a class="" href="javascript:void(0)" title="" data-ripple="">Music</a>
-										<a class="" href="emporium/index-3.html" title="" data-ripple="">Emporium</a>
-										<a class="" href="fitness/index.html" title="" data-ripple="">Health Inspection</a>
-										<a class="" href="settings/account-setting.html" title="" data-ripple="">Settings</a>
-										<a class="" href="javascript:void(0)" title="" data-ripple="">Upload</a>
-										<a class="" href="time-line.html" title="" data-ripple="">time line</a>
-										<a class="" href="timeline-photos.html" title="" data-ripple="">Photos</a>
-										<a class="" href="timeline-videos.html" title="" data-ripple="">Videos</a>
-										<a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
-										<a class="" href="timeline-groups.html" title="" data-ripple="">Groups</a>
-										<a class="" href="about.html" title="" data-ripple="">about</a>
-										<a class="" href="#" title="" data-ripple="">more</a>
-
-									</li>-->
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section><!-- top area -->
-		<section>
-			<div class="bio">
-				{{ user_profile.bio }}
-			</div>
-		</section>
-		
-	<section>
-		<div class="gap gray-bg">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="row" id="page-contents">
-							<div class="col-lg-3">
-								<aside class="sidebar static">
-								</aside>
-							</div><!-- sidebar -->
-							<div class="col-lg-6">
-								<div class="central-meta">
-									<ul class="photos">
-										{% for post in user_posts %}
-											<li>
-												<a class="strip" href="{{ post.image.url }}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-													<img src="{{ post.image.url }}" style="height: 250px; width: 300px;" alt=""></a>
-											</li>
-										{% endfor %}
-									</ul>
-									<!--<div class="lodmore"><button class="btn-view btn-load-more"></button></div>-->
-								</div><!-- photos -->
-							</div><!-- centerl meta -->
-							<div class="col-lg-3">
-								<aside class="sidebar static">
-								</aside>
-							</div><!-- sidebar -->
-						</div>	
-					</div>
-				</div>
-			</div>
-		</div>	
-	</section>
-
-	<script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script src="{% static 'js/main.min.js' %}"></script>
-	<script src="{% static 'js/script.js' %}"></script>
-</body>	
-</html>
+			</div>		
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
