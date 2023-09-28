@@ -1,4 +1,4 @@
-# Connectify - a Social Mmedia Application
+# Connectify - a Social Media Application
 
 Connectify is a Django social media application where users can their friends and family.
 
@@ -39,7 +39,7 @@ pipenv install pillow
 Create a database named 'django_social_media' 
 using your RDMS of choice (in this case using XAMPP Server).
 
-![Create_a_database](/readme_images/xampp_create_database.PNG)
+![Create_a_database](/readme_images/xampp_create_database.png)
 
 Edit your database configuration in the settings.py.
 ![Database_Configuration](/readme_images/change_database_settings.png)
