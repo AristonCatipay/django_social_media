@@ -61,6 +61,8 @@ def index(request):
 
 def signup(request):
     if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
@@ -75,7 +77,7 @@ def signup(request):
                 return redirect('signup')
             else:
                 # Create the user. 
-                user = User.objects.create_user(username=username, email=email, password=password)
+                user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
                 user.save()
                 # Log the user in using the credentials.
                 user_credentials = auth.authenticate(username=username, password=password)
