@@ -54,6 +54,7 @@ def index(request):
 
 
     return render(request, 'index.html', {
+        'title': 'Home',
         'user_profile': user_profile,
         'posts': feed,
         'suggestion_username_profile_list': suggestion_username_profile_list[:4],
@@ -92,7 +93,9 @@ def signup(request):
             messages.info(request, 'Password don\'t match.')
             return redirect('signup')
     else: 
-        return render(request, 'signup.html')
+        return render(request, 'signup.html', {
+            'title': 'Register',
+        })
 
 def signin(request):
     if request.method == 'POST':
@@ -110,7 +113,9 @@ def signin(request):
             messages.info(request, 'Invalid credentials.')
             return redirect('signin')
     else:
-        return render(request, 'signin.html')   
+        return render(request, 'signin.html', {
+            'title': 'Login',
+        })   
     
 @login_required(login_url='signin')
 def logout(request):
@@ -148,6 +153,7 @@ def settings(request):
         return redirect('settings')
 
     return render(request, 'settings.html', {
+        'title': 'Settings',
         'user_profile': user_profile,
     })
 
@@ -207,6 +213,7 @@ def profile(request, primary_key):
     
 
     context = {
+        'title': 'Profile',
         'user_object': user_object,
         'user_profile': user_profile,
         'user_posts': user_posts,
@@ -256,6 +263,7 @@ def search(request):
 
         username_profile_list = list(chain(*username_profile_list))
     return render(request, 'search.html', {
+        'title': 'Search',
         'user_profile': user_profile,
         'username_profile_list': username_profile_list,
     })
