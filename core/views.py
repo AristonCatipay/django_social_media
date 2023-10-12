@@ -51,8 +51,6 @@ def index(request):
 
     suggestion_username_profile_list = list(chain(*username_profile_list))
 
-
-
     return render(request, 'index.html', {
         'title': 'Home',
         'user_profile': user_profile,
@@ -161,10 +159,11 @@ def settings(request):
 def upload(request):
     if request.method == 'POST':
         user = request.user.username
+        profile_id = request.user.id
         image = request.FILES.get('post_image')
         caption = request.POST['caption']
 
-        new_post = Post.objects.create(user=user, image = image, caption=caption)
+        new_post = Post.objects.create(user=user, image = image, caption=caption, profile_id=profile_id)
         new_post.save()
         return redirect('index')
     else:
