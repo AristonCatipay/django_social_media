@@ -23,6 +23,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
     no_of_likes = models.IntegerField(default=0)
     profile = models.ForeignKey(Profile, related_name='profile_id_post', on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user
