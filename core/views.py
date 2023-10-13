@@ -229,13 +229,15 @@ def follow(request):
     if request.method == 'POST':
         follower_username = request.POST['follower_username']
         leader_username = request.POST['leader_username']
+        follower_id = request.POST['follower_id']
+        leader_id = request.POST['leader_id']
 
         if Followers.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
             delete_follower = Followers.objects.get(follower_username=follower_username, leader_username=leader_username)
             delete_follower.delete()
             return redirect('/profile/' + leader_username)
         else:
-            new_follower = Followers.objects.create(follower_username=follower_username, leader_username=leader_username)
+            new_follower = Followers.objects.create(follower_username=follower_username, leader_username=leader_username, follower_id=follower_id, leader_id=leader_id)
             new_follower.save()
             return redirect('/profile/'+ leader_username)
         

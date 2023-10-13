@@ -38,6 +38,8 @@ class LikePost(models.Model):
 class Followers(models.Model):
     follower_username = models.CharField(max_length=100)
     leader_username = models.CharField(max_length=100)
+    follower = models.ForeignKey(User, related_name='follower_id', on_delete=models.CASCADE)
+    leader = models.ForeignKey(User, related_name='leader_id', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.leader_username
