@@ -28,9 +28,9 @@ class Post(models.Model):
         return self.user
     
 class LikePost(models.Model):
-    post_id = models.CharField(max_length=500)
     username = models.CharField(max_length=100)
     profile = models.ForeignKey(Profile, related_name='profile_id_like_post', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='post_id_like_post', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.username
