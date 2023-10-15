@@ -303,3 +303,14 @@ def post(request):
     return render(request, 'post.html', {
         'user_profile': user_profile,
     })
+
+@login_required
+def change_password(request):
+    user = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user)
+
+    return render(request, 'change_password.html', {
+        'title': 'Change Password',
+        'user_profile': user_profile,
+        'user': user,
+    })
