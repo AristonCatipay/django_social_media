@@ -125,9 +125,17 @@ def logout(request):
 
 @login_required(login_url='signin')
 def settings(request):
+    user = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        location = request.POST['location']
+        bio = request.POST['bio']
+
         if request.FILES.get('profile_image') == None:
             # If the user didn't upload their own image
             # Use the default profile image.
@@ -140,6 +148,13 @@ def settings(request):
             user_profile.bio = bio
             user_profile.location = location
             user_profile.save()
+
+            # Update user model
+            user.first_name = first_name
+            user.last_name = last_name
+            user.username = username
+            user.email = email
+            user.save()
         if request.FILES.get('profile_image') != None:
             image = request.FILES.get('profile_image')
             bio = request.POST['bio']
@@ -150,6 +165,13 @@ def settings(request):
             user_profile.bio = bio
             user_profile.location = location
             user_profile.save()
+
+            # Update user model
+            user.first_name = first_name
+            user.last_name = last_name
+            user.username = username
+            user.email = email
+            user.save()
 
         return redirect('settings')
 
