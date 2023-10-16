@@ -6,7 +6,7 @@
         <!-- left sidebar-->
         <div class="space-y-5 flex-shrink-0 lg:w-7/12">
             {% for post in posts reversed%}
-            <div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl">
+            <div class="bg-white border border-violet-200 rounded-lg shadow dark:bg-violet-800 dark:border-violet-700">
                 <!-- post header start -->
                 <div class="flex justify-between items-center px-4 py-3">
                     <div class="flex flex-1 items-center space-x-4">
@@ -17,7 +17,7 @@
                         </a>
                         <span class="block capitalize font-semibold dark:text-white">
                             <a href="{% url 'profile' post.user %}">
-                                {{ post.user }}
+                                {{ post.user_id.first_name }} {{ post.user_id.last_name }}
                             </a>
                         </span>
                     </div>
@@ -92,7 +92,7 @@
         <!-- right sidebar-->
         <div class="lg:w-5/12">
             <div class="bg-white rounded-xl">
-                <div class="w-full max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="w-full max-w-lg p-4 bg-white border border-violet-200 rounded-lg shadow sm:p-6 md:p-8 hover:bg-violet-100 dark:bg-violet-800 dark:border-violet-700 dark:hover:bg-violet-700">
                     <div class="flex items-center justify-between mb-4">
                         <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Follow Users</h5>
                         <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
@@ -116,7 +116,7 @@
                                         </p>
                                     </div>
                                     <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                        <a href="{% url 'profile' suggestion.user %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">View Profile</a>
+                                        <a href="{% url 'profile' suggestion.user %}" class="w-full text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center">View Profile</a>
                                     </div>
                                 </div>
                             </li>
