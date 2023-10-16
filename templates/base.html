@@ -43,9 +43,12 @@
                </div>
             </form>
             <div class="mx-2 my-1">
-               <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+               <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-violet-300 dark:focus:ring-violet-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                   <span class="sr-only">Open user menu</span>
-                  <img class="w-8 h-8 rounded-full object-cover" src="{{ user_profile.profile_image.url }}" alt="user photo">
+                  <div class="relative">
+                     <img class="w-8 h-8 rounded-full object-cover" src="{{ user_profile.profile_image.url }}" alt="user photo">
+                     <span class="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-violet dark:border-violet-800 rounded-full"></span>
+                 </div>
                 </button>
                 <!-- Dropdown menu -->
                 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-violet-700 dark:divide-violet-600" id="user-dropdown">
@@ -55,13 +58,13 @@
                   </div>
                   <ul class="py-2" aria-labelledby="user-menu-button">
                      <li>
-                        <a href="{% url 'post' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Add post</a>
+                        <a href="{% url 'post' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Add post</a>
                       </li>
                     <li>
-                      <a href="{% url 'settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
+                      <a href="{% url 'settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Profile</a>
                     </li>
                     <li>
-                      <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                      <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Sign out</a>
                     </li>
                   </ul>
                 </div>
@@ -112,7 +115,7 @@
             {% endblock %}
         </div>
                 
-      <footer class="bg-white dark:bg-gray-900">
+      <footer class="bg-white dark:bg-violet-900">
          <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div class="md:flex md:justify-between">
                <div class="mb-6 md:mb-0">
