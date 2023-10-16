@@ -4,6 +4,7 @@
 <div class="flex justify-center">
     <div class="w-full max-w-md p-8 bg-white border border-violet-200 rounded-lg shadow sm:p-6 md:p-8 hover:bg-violet-100 dark:bg-violet-800 dark:border-violet-700 dark:hover:bg-violet-700">
         <form action="" method="post">
+            <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">Register to our platform</h5>
             {% csrf_token %}
 
             {% for message in messages %}
@@ -83,7 +84,7 @@
                 <label for="checkbox-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
             </div>
 
-            <button type="submit" class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Register</button>
+            <button type="submit" class="w-full text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Register</button>
             <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Do you have an account? <a href="{% url 'signin'%}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Login</a>.</p>
         </form>
     </div>
