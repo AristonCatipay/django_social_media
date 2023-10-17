@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container flex justify-center mb-10">
 	<div class="w-full max-w-lg p-8 bg-white border border-violet-200 rounded-lg shadow sm:p-6 md:p-8 hover:bg-violet-100 dark:bg-violet-800 dark:border-violet-700 dark:hover:bg-violet-700">
-		{% if user_profile.user.username == request.user.username %}
+		{% if searched_user_profile.user.username == request.user.username %}
 		<div class="flex justify-end px-4 pt-4">
 			<button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-violet-100 dark:hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-violet-200 dark:focus:ring-violet-600 rounded-lg text-sm p-1.5" type="button">
 				<span class="sr-only">Open dropdown</span>
@@ -25,11 +25,11 @@
 		</div>
 		{% endif %}
 		<div class="flex flex-col items-center pb-10">
-			<img class="w-48 h-48 my-6 rounded-full shadow-lg object-cover" src="{{ user_profile.profile_image.url }}" alt="{{ user_profile.user.username }} image"/>
-			<h1 class="mb-1 text-2xl font-medium text-gray-900 dark:text-white">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</h1>
-			<h5 class="mb-1 text-base font-medium text-gray-900 dark:text-white">@{{ user_profile.user.username }}</h5>
-			<h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ user_profile.user.email }}</h5>
-			<span class="text-sm text-gray-500 dark:text-gray-400">{{ user_profile.bio }}</span>
+			<img class="w-48 h-48 my-6 rounded-full shadow-lg object-cover" src="{{ searched_user_profile.profile_image.url }}" alt="{{ searched_user_profile.user.username }} image"/>
+			<h1 class="mb-1 text-2xl font-medium text-gray-900 dark:text-white">{{ searched_user_profile.user.first_name }} {{ searched_user_profile.user.last_name }}</h1>
+			<h5 class="mb-1 text-base font-medium text-gray-900 dark:text-white">@{{ searched_user_profile.user.username }}</h5>
+			<h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ searched_user_profile.user.email }}</h5>
+			<span class="text-sm text-gray-500 dark:text-gray-400">{{ searched_user_profile.bio }}</span>
 			<div class="m-4">
 				<ul class="flex text-base">
 					<li class="mr-2">
@@ -67,7 +67,7 @@
 					<input type="hidden" value="{{ user_object.username }}" name="leader_username">
 					<input type="hidden" value="{{ user.id }}" name="follower_id">
 					<input type="hidden" value="{{ user_object.id }}" name="leader_id">
-				{% if user_object.username == user.username %}
+				{% if searched_user.username == user.username %}
 					<a href="{% url 'settings' %}" class="w-full text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Account Settings</a>
 				{% else %}
 					<button type="submit" class="w-full text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">{{ button_text }}</button>

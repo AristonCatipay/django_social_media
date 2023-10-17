@@ -220,8 +220,10 @@ def like_post(request):
 
 @login_required(login_url='signin')
 def profile(request, primary_key):
-    user_object = User.objects.get(username=primary_key)
-    user_profile = Profile.objects.get(user=user_object)
+    current_user = User.objects.get(username=request.user.username)
+    current_profile = Profile.objects.get(user=current_user)
+    searched_user = User.objects.get(username=primary_key)
+    searched_user_profile = Profile.objects.get(user=searched_user)
     user_posts = Post.objects.filter(user=primary_key)
     user_posts_length = len(user_posts)
 
@@ -240,8 +242,10 @@ def profile(request, primary_key):
 
     context = {
         'title': 'Profile',
-        'user_object': user_object,
-        'user_profile': user_profile,
+        'user_object': current_user,
+        'user_profile': current_profile,
+        'searched_user': searched_user,
+        'searched_user_profile': searched_user_profile,
         'user_posts': user_posts,
         'user_posts_length': user_posts_length,
         'button_text':button_text,
