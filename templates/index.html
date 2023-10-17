@@ -31,12 +31,12 @@
                 </div>
                 <!-- post image end -->
                 <div class="p-3 border-b text-gray-500 dark:text-gray-400 font-normal">
-                    <span class="block capitalize font-semibold dark:text-white">
+                    <h1 class="block font-semibold dark:text-white">
                         <a href="{% url 'profile' post.user %}">
-                            {{ post.user }}
+                            @{{ post.user }}
                         </a>
-                    </span> 
-                    {{ post.caption }}
+                    </h1> 
+                    <h1 class="block dark:text-gray-300">{{ post.caption }}</h1>
                 </div>
                 
                 <div class="py-3 px-4 space-y-3"> 
@@ -56,7 +56,7 @@
                                 {% endif %}
                             </div>   
                         </a>
-                        <a href="{{ post.image.url}}" class="flex items-center space-x-2 flex-1 justify-end" download>
+                        <a href="{{ post.image.url }}" class="flex items-center space-x-2 flex-1 justify-end" download>
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 15">
                                 <path d="M1 13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6H1v7Zm5.293-3.707a1 1 0 0 1 1.414 0L8 9.586V8a1 1 0 0 1 2 0v1.586l.293-.293a1 1 0 0 1 1.414 1.414l-2 2a1 1 0 0 1-1.416 0l-2-2a1 1 0 0 1 .002-1.414ZM17 0H1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1Z"/>
                             </svg>                            
@@ -76,11 +76,11 @@
                         </div>
                         <div class="dark:text-gray-400 font-normal">
                             {% if post.no_of_likes == 0 %}
-                            <p>No likes</p>
+                            <h1 class="dark:text-gray-300">No likes</h1>
                             {% elif post.no_of_likes == 1 %}
-                            <p>Liked by {{ post.no_of_likes }} person</p>
+                            <h1 class="dark:text-gray-300">Liked by {{ post.no_of_likes }} person</h1>
                             {% else %}
-                            <p>Liked by {{ post.no_of_likes }} people</p>
+                            <h1 class="dark:text-gray-300">Liked by {{ post.no_of_likes }} people</h1>
                             {% endif %}
                         </div>
                     </div>
@@ -105,13 +105,13 @@
                             <li class="py-3 sm:py-4">
                                 <div class="flex items-center space-x-4">
                                     <div class="flex-shrink-0">
-                                        <img class="w-8 h-8 rounded-full" src="{{ suggestion.profile_image.url }}" alt="Neil image">
+                                        <img class="w-10 h-10 rounded-full object-cover" src="{{ suggestion.profile_image.url }}" alt="Neil image">
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                            {{suggestion.user}}
+                                        <p class="text-md font-medium text-gray-900 truncate dark:text-white">
+                                            @{{suggestion.user}}
                                         </p>
-                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                        <p class="text-sm text-gray-300 truncate dark:text-gray-200">
                                             {{suggestion.bio}}
                                         </p>
                                     </div>
