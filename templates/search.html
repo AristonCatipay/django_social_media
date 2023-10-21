@@ -1,14 +1,14 @@
 {%extends 'base.html'%}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<div class="flex flex-col">
-    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+<div class="flex justify-center">
+    <div class="w-full max-w-xl p-8 bg-white border border-violet-200 rounded-lg shadow sm:p-6 md:p-8 hover:bg-violet-100 dark:bg-violet-800 dark:border-violet-700 dark:hover:bg-violet-700">
         <div class="mb-4">
             <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Results</h5>
         </div>
-        {% for user in username_profile_list %}
         <div class="flow-root">
-            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+            {% for user in username_profile_list %}
+            <ul class="divide-y divide-gray-200 dark:divide-gray-700">
                 <li class="py-3 sm:py-4">
                     <div class="flex items-center space-x-4">
                         <div class="flex-shrink-0">
@@ -19,21 +19,29 @@
                         <div class="flex-1 min-w-0">
                             <p class="text-lg font-medium text-gray-900 truncate dark:text-white">
                                 <a class="image-link" href="{% url 'profile' user.user %}">
-                                    {{user.user}}
+                                    @{{user.user}}
                                 </a>
                             </p>
+                            <div class="flex flex-row">
+                                <svg class="w-4 h-4 mt-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 21">
+                                    <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                      <path d="M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                                      <path d="M13.8 12.938h-.01a7 7 0 1 0-11.465.144h-.016l.141.17c.1.128.2.252.3.372L8 20l5.13-6.248c.193-.209.373-.429.54-.66l.13-.154Z"/>
+                                    </g>
+                                  </svg>
+                                <p class="text-base text-gray-500 truncate dark:text-gray-400">
+                                    {{user.location}}
+                                </p>
+                            </div>
                             <p class="text-base text-gray-500 truncate dark:text-gray-400">
                                 {{user.bio}}
-                            </p>
-                            <p class="text-base text-gray-500 truncate dark:text-gray-400">
-                                {{user.location}}
                             </p>
                         </div>
                     </div>
                 </li>
             </ul>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}
