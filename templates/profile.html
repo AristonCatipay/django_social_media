@@ -93,7 +93,41 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </div>		
+		<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+			<ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+				<li class="mr-2" role="presentation">
+					<button class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group" id="following-tab" data-tabs-target="#following" type="button" role="tab" aria-controls="following" aria-selected="false">
+						<svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3a3 3 0 1 1-1.614 5.53M15 12a4 4 0 0 1 4 4v1h-3.348M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+						</svg>Following
+					</button>
+				</li>
+				<li class="mr-2" role="presentation">
+					<button class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group" id="follower-tab" data-tabs-target="#follower" type="button" role="tab" aria-controls="follower" aria-selected="false">
+						<svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.333 6.764a3 3 0 1 1 3.141-5.023M2.5 16H1v-2a4 4 0 0 1 4-4m7.379-8.121a3 3 0 1 1 2.976 5M15 10a4 4 0 0 1 4 4v2h-1.761M13 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-4 6h2a4 4 0 0 1 4 4v2H5v-2a4 4 0 0 1 4-4Z"/>
+						</svg>Followers
+					</button>
+				</li>
+			</ul>
+		</div>
+		<div id="myTabContent">
+			<div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="following" role="tabpanel" aria-labelledby="following-tab">
+				<ul>
+					{% for user in following %}
+						<li class="text-sm text-gray-500 dark:text-gray-200">@{{ user.leader.username }}</li>	
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="follower" role="tabpanel" aria-labelledby="follower-tab">
+				<ul>
+					{% for user in followers %}
+						<li class="text-sm text-gray-500 dark:text-gray-200">@{{ user.follower.username }}</li>	
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
 		
 		{% if searched_user.username != user.username %}
 		<div class="flex flex-col items-center pb-10">

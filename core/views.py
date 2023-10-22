@@ -63,11 +63,20 @@ def index(request):
 
 @login_required()
 def new_index(request):
+    # User profile for navbar
     user = User.objects.get(username = request.user.username)
     profile = Profile.objects.get(user=user)
+
+    # Post
+    posts = Post.objects.all()
+
+    following = Followers.objects.filter(follower=user)
+
+
     return render(request, 'new_index.html', {
         'title': 'Welcome',
         'user_profile': profile,
+        'posts': posts
     })
 
 
@@ -242,12 +251,18 @@ def profile(request, primary_key):
 
     user_followers = len(Followers.objects.filter(leader_username=primary_key))
     user_following = len(Followers.objects.filter(follower_username=primary_key))
+
+    # Get the users that is followed by the searched user.
+    following = Followers.objects.filter(follower=searched_user)
+    # Get the users that is following the searched user.
+    followers = Followers.objects.filter(leader=searched_user)
     
 
     if Followers.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
         button_text = 'Unfollow'
     else:
         button_text = 'Follow'
+
     
 
     context = {
@@ -261,6 +276,8 @@ def profile(request, primary_key):
         'button_text':button_text,
         'user_followers':user_followers,
         'user_following':user_following,
+        'following': following,
+        'followers': followers,
     }
     return render(request, 'profile.html', context)
 
