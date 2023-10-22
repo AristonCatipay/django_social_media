@@ -61,6 +61,16 @@ def index(request):
         'suggestion_username_profile_list': suggestion_username_profile_list[:4],
     })
 
+@login_required()
+def new_index(request):
+    user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user=user)
+    return render(request, 'new_index.html', {
+        'title': 'Welcome',
+        'user_profile': profile,
+    })
+
+
 def signup(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
