@@ -256,7 +256,6 @@ def profile(request, primary_key):
     following = Followers.objects.filter(follower=searched_user)
     # Get the users that is following the searched user.
     followers = Followers.objects.filter(leader=searched_user)
-    
 
     if Followers.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
         button_text = 'Unfollow'
@@ -271,7 +270,7 @@ def profile(request, primary_key):
         'user_profile': current_profile,
         'searched_user': searched_user,
         'searched_user_profile': searched_user_profile,
-        'user_posts': user_posts,
+        'posts': user_posts,
         'user_posts_length': user_posts_length,
         'button_text':button_text,
         'user_followers':user_followers,

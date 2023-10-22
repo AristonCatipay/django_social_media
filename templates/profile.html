@@ -163,12 +163,90 @@
 	</div>
 </div>
 
-<div class="flex flex-wrap">
-	<!-- Card for each item. -->
-	{% for post in user_posts %}
-		<div class="m-4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-				<img class="w-96 h-96 rounded-lg object-cover" src="{{ post.image.url }}" alt="Bonnie image"/>
-		</div>		
-	{% endfor %}
+<div class="flex justify-center">
+    <div class="w-full max-w-lg">
+        {% for post in posts %}
+        <div class="bg-white my-2 border border-violet-200 rounded-lg shadow dark:bg-violet-800 dark:border-violet-700">
+            <!-- post header start -->
+            <div class="flex justify-between items-center px-4 py-3">
+                <div class="flex flex-1 items-center space-x-4">
+                    <a href="#">
+                        <div class="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">  
+                            <img src="{{ post.profile.profile_image.url }}" class="bg-gray-200 border border-white rounded-full w-8 h-8 object-cover">
+                        </div>
+                    </a>
+                    <span class="block capitalize font-semibold dark:text-white">
+                        <a href="#">
+                            {{ post.user_id.first_name }} {{ post.user_id.last_name }}
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <!-- post header end -->
+            <!-- post image start -->
+            <div class="grid grid-cols-1 justify-items-center">
+                <a href="{{ post.image.url }}">  
+                    <img src="{{ post.image.url }}" class="w-96 h-96 object-cover">
+                </a>
+            </div>
+            <!-- post image end -->
+            <div class="p-3 border-b text-gray-500 dark:text-gray-400 font-normal">
+                <h1 class="block font-semibold dark:text-white">
+                    <a href="#">
+                        @{{ post.user }}
+                    </a>
+                </h1> 
+                <h1 class="block dark:text-gray-300">{{ post.caption }}</h1>
+            </div>
+            
+            <div class="py-3 px-4 space-y-3"> 
+                <div class="flex space-x-4 lg:font-bold">
+                    <a href="/like-post?post_id={{ post.id }}" class="flex items-center space-x-2">
+                        <div class="p-2 rounded-full text-black">
+                            {% if post.no_of_likes == 0 %}
+                            <!-- Not clicked -->
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z"/>
+                              </svg>
+                            {% else %}
+                            <!-- Clicked -->
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                <path d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z"/>
+                              </svg>
+                            {% endif %}
+                        </div>   
+                    </a>
+                    <a href="{{ post.image.url }}" class="flex items-center space-x-2 flex-1 justify-end" download>
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 15">
+                            <path d="M1 13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6H1v7Zm5.293-3.707a1 1 0 0 1 1.414 0L8 9.586V8a1 1 0 0 1 2 0v1.586l.293-.293a1 1 0 0 1 1.414 1.414l-2 2a1 1 0 0 1-1.416 0l-2-2a1 1 0 0 1 .002-1.414ZM17 0H1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1Z"/>
+                        </svg>                            
+                    </a>
+                </div>
+                <div class="flex items-center space-x-3"> 
+                    <div class="flex items-center">
+                        {% if post.no_of_likes > 0 %}                        
+                        <div class="flex -space-x-4">
+                            {% for like in like_post %}
+                                    {% if like.post_id == post.id %}
+                                    <img class="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800 object-cover" src="{{ like.profile.profile_image.url }}" alt="">
+                                    {% endif %}
+                                    {% endfor %}                              
+                                </div> 
+                        {% endif %}
+                    </div>
+                    <div class="dark:text-gray-400 font-normal">
+                        {% if post.no_of_likes == 0 %}
+                        <h1 class="dark:text-gray-300">No likes</h1>
+                        {% elif post.no_of_likes == 1 %}
+                        <h1 class="dark:text-gray-300">Liked by {{ post.no_of_likes }} person</h1>
+                        {% else %}
+                        <h1 class="dark:text-gray-300">Liked by {{ post.no_of_likes }} people</h1>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
