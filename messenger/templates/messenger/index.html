@@ -22,6 +22,7 @@
                     </form>
                 </div>
                 <div class="contacts p-2 flex-1 overflow-y-scroll">
+                    {% for user in users %}
                     <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
                         <div class="w-16 h-16 relative flex flex-shrink-0">
                             <img class="shadow-md rounded-full w-full h-full object-cover"
@@ -30,16 +31,17 @@
                             />
                         </div>
                         <div class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
-                            <p>Angelina Jolie</p>
+                            <p>{{ user.first_name }} {{ user.last_name }}</p>
                             <div class="flex items-center text-sm text-gray-600">
                                 <div class="min-w-0">
-                                    <p class="truncate">Ok, see you at the subway in a bit.</p>
+                                    <p class="truncate">This should be the last message.</p>
                                 </div>
                                 <p class="ml-2 whitespace-no-wrap">Just now</p>
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
+                    {% endfor %}
+                    <!-- <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
                         <div class="w-16 h-16 relative flex flex-shrink-0">
                             <img class="shadow-md rounded-full w-full h-full object-cover"
                                 src="https://randomuser.me/api/portraits/men/97.jpg"
@@ -324,7 +326,7 @@
                             <img class="rounded-full w-full h-full object-cover" alt="user2"
                                 src="https://randomuser.me/api/portraits/men/32.jpg"/>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="flex flex-col flex-auto border-l border-gray-800">
