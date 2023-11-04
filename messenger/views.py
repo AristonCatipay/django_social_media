@@ -5,7 +5,6 @@ from .models import Metadata
 from core.models import Profile
 
 def index(request):
-    # Get the user and profile object.
     user = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user)
 
@@ -14,12 +13,15 @@ def index(request):
 
     if query:
         users = users.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
+    
+    users = users.select_related('profile')
 
     return render(request, 'messenger/index.html', {
         'title': 'Messenger',
         'user_profile': user_profile,
         'users': users,
     })
+
 
 # def add_message_or_redirect_to_messages(request, searched_user_primary_key):
 #     searched_user = User.objects.get(pk=searched_user_primary_key)

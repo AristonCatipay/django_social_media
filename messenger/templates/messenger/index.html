@@ -34,7 +34,7 @@
                     <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
                         <div class="w-16 h-16 relative flex flex-shrink-0">
                             <img class="shadow-md rounded-full w-full h-full object-cover"
-                                src="https://randomuser.me/api/portraits/women/61.jpg"
+                                src="{{ user.profile.profile_image.url }}"
                                 alt=""
                             />
                         </div>
@@ -42,7 +42,7 @@
                             <p>{{ user.first_name }} {{ user.last_name }}</p>
                             <div class="flex items-center text-sm text-gray-600">
                                 <div class="min-w-0">
-                                    <p class="truncate">This should be the last message.</p>
+                                    <p>Last message</p>
                                 </div>
                                 <p class="ml-2 whitespace-no-wrap">Just now</p>
                             </div>
