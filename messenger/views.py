@@ -2,8 +2,13 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.db.models import Q
 from .models import Metadata
+from core.models import Profile
 
 def index(request):
+    # Get the user and profile object.
+    user = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user)
+
     query = request.GET.get('query', '')
     users = User.objects.filter(is_staff=False, is_superuser=False)
 
@@ -12,6 +17,7 @@ def index(request):
 
     return render(request, 'messenger/index.html', {
         'title': 'Messenger',
+        'user_profile': user_profile,
         'users': users,
     })
 
