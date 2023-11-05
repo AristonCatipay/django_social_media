@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.db.models import Q
-from .models import Metadata
 from core.models import Profile
+from .models import Metadata
+from .forms import MessageForm
 
 def index(request):
     user = User.objects.get(username=request.user.username)
@@ -22,13 +23,40 @@ def index(request):
         'users': users,
     })
 
+def add_message_or_redirect_to_messages(request, searched_user_primary_key):
+    # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    user_profile = Profile.objects.get(user = user)
 
-# def add_message_or_redirect_to_messages(request, searched_user_primary_key):
-#     searched_user = User.objects.get(pk=searched_user_primary_key)
-#     is_messaged_before = True if Metadata.objects.filter(members__in=[request.user.id]).filter(members__in=[searched_user_primary_key]) else False
-    
-#     if is_messaged_before:
-#         pass
+    searched_user = User.objects.get(pk=searched_user_primary_key)
+    is_messaged_before = True if Metadata.objects.filter(reciever=searched_user).filter(members__in=[request.user.id]) else False
+
+    if is_messaged_before:
+        pass
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            # Create the metadata
+            metadata = Metadata.objects.create(reciever=searched_user)
+            metadata.members.add(request.user)
+            metadata.members.add(searched_user)
+            metadata.save()
+
+            # Save the message
+            message = form.save(commit=False)
+            message.metadata = metadata
+            message.created_by = request.user
+            message.save()
+    else:
+        form = MessageForm()
+
+    return render(request, 'messenger/form.html', {
+        'title': 'Send Message',
+        'user_profile': user_profile,
+        'form': form, 
+    })
+
 
         
    
