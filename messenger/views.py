@@ -80,7 +80,7 @@ def messages(request, metadata_primary_key):
     user_profile = Profile.objects.get(user = user)
 
     metadata = Metadata.objects.filter(members__in=[request.user.id]).get(pk=metadata_primary_key)
-    reciever = metadata.reciever
+    reciever = metadata.members.exclude(id=request.user.id).first()
 
     if request.method == 'POST':
         form = MessageForm(request.POST)
