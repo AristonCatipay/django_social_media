@@ -23,6 +23,24 @@ def index(request):
         'users': users,
     })
 
+def inbox(request):
+    user = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user)
+
+    query = request.GET.get('query', '')
+    # Get all the conversations connected to the item where the user is a member.
+    metadata = Metadata.objects.filter(members__in=[request.user.id])
+
+    # if query:
+    #     metadata = metadata.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
+    
+    # metadata = metadata.select_related('profile')
+    return render(request, 'messenger/inbox.html', {
+        'title': 'Messenger',
+        'user_profile': user_profile,
+        'metadata': metadata,
+    })
+
 def add_message_or_redirect_to_messages(request, searched_user_primary_key):
     # Get the user and profile object.
     user = User.objects.get(username = request.user.username)

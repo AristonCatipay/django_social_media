@@ -8,6 +8,8 @@ class MessageForm(forms.ModelForm):
         fields = ['content']
         widgets = {
             'content': forms.Textarea(attrs={
-                'class': INPUT_CLASSES
+                'class': INPUT_CLASSES, 
+                'placeholder': 'Your message...', 
+                'rows': '1',
             })
         }

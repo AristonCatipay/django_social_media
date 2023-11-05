@@ -1,0 +1,46 @@
+{%extends 'base.html'%}
+{% block title %}{{ title }}{% endblock %}
+{% block content %} 
+<div class="flex justify-center">
+    <div class="md:w-1/2 p-6 md:px-10 md:py-10 border-violet-200 rounded-lg shadow dark:bg-violet-800 dark:border-violet-700">
+        <h1 class="mb-10 text-2xl text-white font-bold">Inbox</h1>
+        {% if metadata %}
+            {% for metadata in metadata %}
+                <a href="{% url 'messenger:messages' metadata.id %}">
+                    <div id="toast-notification" class="w-full m-1 p-3 border-violet-100 rounded-lg shadow dark:bg-violet-800 dark:border-violet-100" role="alert">
+                        <div class="flex items-center">
+                            <div class="relative inline-block shrink-0">
+                                <img class="w-16 h-16 object-cover rounded-full" src="{{ metadata.reciever.profile.profile_image.url }}" alt="{{ conversation.item.name }}"/>
+                            </div>
+                            {% for member in metadata.members.all %}
+                                {% if member != request.user %}
+                                    <div class="ml-3 text-sm font-normal">
+                                        <div class="text-sm font-semibold dark:text-white">{{ member.first_name.capitalize }} {{ member.last_name.capitalize }} <a href="#" class="italic font-semibold text-gray-900 dark:text-white hover:underline">@{{ member.username }}</a></div>
+                                        <span class="text-xs font-medium text-blue-600 dark:text-blue-500">{{ metadata.modified_at|date:"F j, Y" }}</span>   
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}            
+            <div class="flex justify-center">
+                <div>
+                    <img class="h-80" src="#" alt="">
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div class="flex-col text-center">
+                    <div>
+                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Your messages will appear here.</h1>
+                    </div>
+                    <div>
+                        <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Chat with fellow users about the unique treasures available in our used marketplace. Feel free to negotiate, ask questions, or arrange meet-ups. Happy exploring and connecting!</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
