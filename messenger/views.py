@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from core.models import Profile
 from .models import Metadata
@@ -57,6 +57,35 @@ def add_message_or_redirect_to_messages(request, searched_user_primary_key):
         'form': form, 
     })
 
+def messages(request, metadata_primary_key):
+     # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    user_profile = Profile.objects.get(user = user)
+
+    metadata = Metadata.objects.filter(members__in=[request.user.id]).get(pk=metadata_primary_key)
+    reciever = metadata.reciever
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            # Save the message
+            message = form.save(commit=False)
+            message.metadata = metadata
+            message.created_by = request.user
+            message.save()
+
+            metadata.save()
+            return redirect('messenger:messages', metadata_primary_key=metadata_primary_key)
+    else:
+        form = MessageForm()
+
+    return render(request, 'messenger/messages.html', {
+        'title': 'Send Message',
+        'user_profile': user_profile,
+        'metadata': metadata,
+        'reciever': reciever,
+        'form': form,
+    })
 
         
    
