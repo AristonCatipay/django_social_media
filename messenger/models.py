@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 
 class Metadata(models.Model):
-    members = models.ManyToManyField(User, related_name='conversations')
+    reciever = models.ForeignKey(User, related_name='reciever', on_delete=models.CASCADE)
+    members = models.ManyToManyField(User, related_name='members')
     created_at = models.DateField(auto_now_add=True)
     modified_at  = models.DateTimeField(auto_now=True)
 
