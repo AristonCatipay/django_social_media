@@ -22,9 +22,9 @@
               <div class="chat-message">
                   <div class="flex items-end">
                      <div class="flex flex-col space-y-2 text-sm max-w-xs mx-2 order-2 items-start">
-                        <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">{{ message.content }}</span></div>
+                        <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-pink-600 text-gray-200">{{ message.content }}</span></div>
                      </div>
-                     <img src="{{ reciever.profile.profile_image.url }}" alt="{{ reciever.first_name }} {{ reciever.last_name }} profile" class="w-6 h-6 rounded-full order-1">
+                     <img src="{{ reciever.profile.profile_image.url }}" alt="{{ reciever.first_name }} {{ reciever.last_name }} profile" class="w-6 h-6 rounded-full order-1 object-cover">
                   </div>
                </div>
               {% else %}
@@ -33,7 +33,7 @@
                      <div class="flex flex-col space-y-2 text-sm max-w-xs mx-2 order-1 items-end">
                         <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">{{ message.content }}</span></div>
                      </div>
-                     <img src="{{ request.user.profile.profile_image.url }}" alt="My profile" class="w-6 h-6 rounded-full order-2">
+                     <img src="{{ request.user.profile.profile_image.url }}" alt="My profile" class="w-6 h-6 rounded-full order-2 object-cover">
                   </div>
                </div>
               {% endif %}
