@@ -27,14 +27,9 @@ def inbox(request):
     user = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user)
 
-    query = request.GET.get('query', '')
     # Get all the conversations connected to the item where the user is a member.
     metadata = Metadata.objects.filter(members__in=[request.user.id])
 
-    # if query:
-    #     metadata = metadata.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
-    
-    # metadata = metadata.select_related('profile')
     return render(request, 'messenger/inbox.html', {
         'title': 'Messenger',
         'user_profile': user_profile,
@@ -48,9 +43,10 @@ def add_message_or_redirect_to_messages(request, searched_user_primary_key):
 
     searched_user = User.objects.get(pk=searched_user_primary_key)
     is_messaged_before = True if Metadata.objects.filter(reciever=searched_user).filter(members__in=[request.user.id]) else False
+    messages = Metadata.objects.filter(reciever=searched_user).filter(members__in=[request.user.id])
 
     if is_messaged_before:
-        pass
+        return redirect('messenger:messages', metadata_primary_key=messages.first().id)
 
     if request.method == 'POST':
         form = MessageForm(request.POST)
@@ -66,13 +62,16 @@ def add_message_or_redirect_to_messages(request, searched_user_primary_key):
             message.metadata = metadata
             message.created_by = request.user
             message.save()
+
+            return redirect('messenger:messages', metadata_primary_key=metadata.pk)
     else:
         form = MessageForm()
 
-    return render(request, 'messenger/form.html', {
+    return render(request, 'messenger/messages.html', {
         'title': 'Send Message',
         'user_profile': user_profile,
         'form': form, 
+        'reciever': searched_user,
     })
 
 def messages(request, metadata_primary_key):
