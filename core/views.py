@@ -9,9 +9,6 @@ import random
 
 @login_required(login_url='signin')
 def index(request):
-    user_object = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user_object)
-
     user_following_list = []
     user_following_feed = []
 
@@ -55,7 +52,6 @@ def index(request):
 
     return render(request, 'index.html', {
         'title': 'Home',
-        'user_profile': user_profile,
         'posts': feed,
         'like_post': like_post_all,
         'suggestion_username_profile_list': suggestion_username_profile_list[:4],
@@ -63,19 +59,14 @@ def index(request):
 
 @login_required()
 def new_index(request):
-    # User profile for navbar
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user=user)
-
     # Post
     posts = Post.objects.all()
 
-    following = Followers.objects.filter(follower=user)
+    following = Followers.objects.filter(follower=request.user)
 
 
     return render(request, 'new_index.html', {
         'title': 'Welcome',
-        'user_profile': profile,
         'posts': posts
     })
 
@@ -302,9 +293,6 @@ def follow(request):
     
 @login_required(login_url='signin')
 def search(request):
-    user_object = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user_object)
-    
     if request.method == 'POST':
         username = request.POST['username']
         username_object = User.objects.filter(username__icontains=username)
@@ -322,17 +310,12 @@ def search(request):
         username_profile_list = list(chain(*username_profile_list))
     return render(request, 'search.html', {
         'title': 'Search',
-        'user_profile': user_profile,
         'username_profile_list': username_profile_list,
     })
 
 @login_required(login_url='signin')
 def post(request):
-    user_object = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user_object)
-    return render(request, 'post.html', {
-        'user_profile': user_profile,
-    })
+    return render(request, 'post.html')
 
 @login_required(login_url='signin')
 def change_password(request):
