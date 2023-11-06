@@ -6,55 +6,80 @@ from . models import Profile, Post, LikePost, Followers
 from itertools import chain
 import random
 
+# @login_required(login_url='signin')
+# def index(request):
+#     user_following_list = []
+#     user_following_feed = []
+
+#     user_following = Followers.objects.filter(follower_username=request.user.username)
+
+#     for user in user_following:
+#         user_following_list.append(user.leader_username)
+
+#     for username in user_following_list:
+#         feed_list = Post.objects.filter(user=username)
+#         user_following_feed.append(feed_list)
+
+#     feed = list(chain(*user_following_feed))
+
+#     # Suggestion for users that you can follow.
+#     data_of_user_following = []
+#     all_users = User.objects.all()
+
+#     for user in user_following:
+#         user_list = User.objects.get(username=user)
+#         data_of_user_following.append(user_list)
+
+#     list_of_user_not_yet_followed = [user for user in list(all_users) if (user not in list(data_of_user_following))]
+#     current_user = User.objects.filter(username=request.user.username)
+#     final_follow_suggestion_list = [user for user in list(list_of_user_not_yet_followed) if (user not in list(current_user))]
+#     random.shuffle(final_follow_suggestion_list)
+
+#     username_profile = []
+#     username_profile_list = []
+
+#     for user in final_follow_suggestion_list:
+#         username_profile.append(user.id)
+
+#     for id in username_profile:
+#         profile_list = Profile.objects.filter(id_user=id)
+#         username_profile_list.append(profile_list)
+
+#     suggestion_username_profile_list = list(chain(*username_profile_list))
+
+#     like_post_all = LikePost.objects.all()
+
+#     return render(request, 'index.html', {
+#         'title': 'Home',
+#         'posts': feed,
+#         'like_post': like_post_all,
+#         'suggestion_username_profile_list': suggestion_username_profile_list[:4],
+#     })
+
 @login_required(login_url='signin')
 def index(request):
-    user_following_list = []
-    user_following_feed = []
+    # Get the list of usernames the current user is following
+    user_following = Followers.objects.filter(follower=request.user).values_list('leader_username', flat=True)
 
-    user_following = Followers.objects.filter(follower_username=request.user.username)
+    # Use the list of usernames to retrieve posts
+    user_following_feed = Post.objects.filter(user__in=user_following)
 
-    for user in user_following:
-        user_following_list.append(user.leader_username)
+    # Get a queryset of users that the current user is not following and is not the current user
+    suggestion_users = User.objects.exclude(username__in=user_following).exclude(username=request.user.username).order_by('?')
 
-    for username in user_following_list:
-        feed_list = Post.objects.filter(user=username)
-        user_following_feed.append(feed_list)
-
-    feed = list(chain(*user_following_feed))
-
-    # Suggestion for users that you can follow.
-    data_of_user_following = []
-    all_users = User.objects.all()
-
-    for user in user_following:
-        user_list = User.objects.get(username=user)
-        data_of_user_following.append(user_list)
-
-    list_of_user_not_yet_followed = [user for user in list(all_users) if (user not in list(data_of_user_following))]
-    current_user = User.objects.filter(username=request.user.username)
-    final_follow_suggestion_list = [user for user in list(list_of_user_not_yet_followed) if (user not in list(current_user))]
-    random.shuffle(final_follow_suggestion_list)
-
-    username_profile = []
-    username_profile_list = []
-
-    for user in final_follow_suggestion_list:
-        username_profile.append(user.id)
-
-    for id in username_profile:
-        profile_list = Profile.objects.filter(id_user=id)
-        username_profile_list.append(profile_list)
-
-    suggestion_username_profile_list = list(chain(*username_profile_list))
-
+    # Get the profiles of the suggested users
+    suggestion_profiles = Profile.objects.filter(user__in=suggestion_users)
+    
+    # Get all the liked posts
     like_post_all = LikePost.objects.all()
 
     return render(request, 'index.html', {
         'title': 'Home',
-        'posts': feed,
+        'posts': user_following_feed,
         'like_post': like_post_all,
-        'suggestion_username_profile_list': suggestion_username_profile_list[:4],
+        'suggestion_profiles': suggestion_profiles[:3],  # Limit to the first 3 suggested profiles
     })
+
 
 @login_required()
 def new_index(request):

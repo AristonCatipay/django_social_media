@@ -99,20 +99,20 @@
                             Refresh
                         </a>
                     </div>
-                    {% for suggestion in suggestion_username_profile_list%}
+                    {% for suggestion in suggestion_profiles %}
                     <div class="flow-root">
                         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
                             <li class="py-3 sm:py-4">
                                 <div class="flex items-center space-x-4">
                                     <div class="flex-shrink-0">
-                                        <img class="w-10 h-10 rounded-full object-cover" src="{{ suggestion.profile_image.url }}" alt="Neil image">
+                                        <img class="w-12 h-12 rounded-full object-cover" src="{{ suggestion.profile_image.url }}" alt="Neil image">
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-md font-medium text-gray-900 truncate dark:text-white">
-                                            @{{suggestion.user}}
+                                            {{suggestion.user.first_name }} {{suggestion.user.last_name }}
                                         </p>
                                         <p class="text-sm text-gray-300 truncate dark:text-gray-200">
-                                            {{suggestion.bio}}
+                                            @{{suggestion.user }}
                                         </p>
                                     </div>
                                     <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">

@@ -16,7 +16,7 @@
         <link rel="shortcut icon" type="image/png" href="{% static 'connectify_logo.png' %}" >
         <title>{% block title %}{% endblock %} | Connectify</title>
     </head>
-    <body>
+    <body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-violet-500">
       {% if request.user.is_authenticated %}      
          <nav class="bg-gradient-to-r from-indigo-500 via-purple-500 to-violet-500">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
