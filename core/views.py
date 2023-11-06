@@ -81,20 +81,6 @@ def index(request):
     })
 
 
-@login_required()
-def new_index(request):
-    # Post
-    posts = Post.objects.all()
-
-    following = Followers.objects.filter(follower=request.user)
-
-
-    return render(request, 'new_index.html', {
-        'title': 'Welcome',
-        'posts': posts
-    })
-
-
 def signup(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
