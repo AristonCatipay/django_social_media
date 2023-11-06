@@ -319,16 +319,13 @@ def post(request):
 
 @login_required(login_url='signin')
 def change_password(request):
-    user = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user)
-    
     if request.method == 'POST':
         new_password = request.POST['new_password']
         confirm_new_password = request.POST['confirm_new_password']
         
         if new_password == confirm_new_password:
-            user.set_password(new_password)
-            user.save()
+            request.user.set_password(new_password)
+            request.user.save()
             messages.info(request, 'Successful.')
         else:
             messages.info(request, 'New password does not match.')
@@ -336,6 +333,4 @@ def change_password(request):
 
     return render(request, 'change_password.html', {
         'title': 'Change Password',
-        'user_profile': user_profile,
-        'user': user,
     })
