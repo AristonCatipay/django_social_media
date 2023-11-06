@@ -6,9 +6,6 @@ from .models import Metadata
 from .forms import MessageForm
 
 def index(request):
-    user = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user)
-
     query = request.GET.get('query', '')
     users = User.objects.filter(is_staff=False, is_superuser=False)
 
@@ -19,28 +16,19 @@ def index(request):
 
     return render(request, 'messenger/index.html', {
         'title': 'Messenger',
-        'user_profile': user_profile,
         'users': users,
     })
 
 def inbox(request):
-    user = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user)
-
     # Get all the conversations connected to the item where the user is a member.
     metadata = Metadata.objects.filter(members__in=[request.user.id])
 
     return render(request, 'messenger/inbox.html', {
         'title': 'Messenger',
-        'user_profile': user_profile,
         'metadata': metadata,
     })
 
 def add_message_or_redirect_to_messages(request, searched_user_primary_key):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    user_profile = Profile.objects.get(user = user)
-
     searched_user = User.objects.get(pk=searched_user_primary_key)
     metadata = Metadata.objects.filter(members__in=[request.user.id]).filter(members__in=[searched_user_primary_key])
 
@@ -68,16 +56,11 @@ def add_message_or_redirect_to_messages(request, searched_user_primary_key):
 
     return render(request, 'messenger/messages.html', {
         'title': 'Send Message',
-        'user_profile': user_profile,
         'form': form, 
         'reciever': searched_user,
     })
 
 def messages(request, metadata_primary_key):
-     # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    user_profile = Profile.objects.get(user = user)
-
     metadata = Metadata.objects.filter(members__in=[request.user.id]).get(pk=metadata_primary_key)
     reciever = metadata.members.exclude(id=request.user.id).first()
 
@@ -97,7 +80,6 @@ def messages(request, metadata_primary_key):
 
     return render(request, 'messenger/messages.html', {
         'title': 'Send Message',
-        'user_profile': user_profile,
         'metadata': metadata,
         'reciever': reciever,
         'form': form,
