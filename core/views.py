@@ -4,57 +4,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from . models import Profile, Post, LikePost, Followers
 from itertools import chain
-import random
-
-# @login_required(login_url='signin')
-# def index(request):
-#     user_following_list = []
-#     user_following_feed = []
-
-#     user_following = Followers.objects.filter(follower_username=request.user.username)
-
-#     for user in user_following:
-#         user_following_list.append(user.leader_username)
-
-#     for username in user_following_list:
-#         feed_list = Post.objects.filter(user=username)
-#         user_following_feed.append(feed_list)
-
-#     feed = list(chain(*user_following_feed))
-
-#     # Suggestion for users that you can follow.
-#     data_of_user_following = []
-#     all_users = User.objects.all()
-
-#     for user in user_following:
-#         user_list = User.objects.get(username=user)
-#         data_of_user_following.append(user_list)
-
-#     list_of_user_not_yet_followed = [user for user in list(all_users) if (user not in list(data_of_user_following))]
-#     current_user = User.objects.filter(username=request.user.username)
-#     final_follow_suggestion_list = [user for user in list(list_of_user_not_yet_followed) if (user not in list(current_user))]
-#     random.shuffle(final_follow_suggestion_list)
-
-#     username_profile = []
-#     username_profile_list = []
-
-#     for user in final_follow_suggestion_list:
-#         username_profile.append(user.id)
-
-#     for id in username_profile:
-#         profile_list = Profile.objects.filter(id_user=id)
-#         username_profile_list.append(profile_list)
-
-#     suggestion_username_profile_list = list(chain(*username_profile_list))
-
-#     like_post_all = LikePost.objects.all()
-
-#     return render(request, 'index.html', {
-#         'title': 'Home',
-#         'posts': feed,
-#         'like_post': like_post_all,
-#         'suggestion_username_profile_list': suggestion_username_profile_list[:4],
-#     })
 
 @login_required(login_url='signin')
 def index(request):
@@ -145,60 +94,39 @@ def logout(request):
 
 @login_required(login_url='signin')
 def settings(request):
-    user = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=request.user)
+    user = request.user
+    user_profile = user.profile
 
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        username = request.POST['username']
-        email = request.POST['email']
-        location = request.POST['location']
-        bio = request.POST['bio']
+        # Get form data
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        location = request.POST.get('location')
+        bio = request.POST.get('bio')
+        profile_image = request.FILES.get('profile_image')
 
-        if request.FILES.get('profile_image') == None:
-            # If the user didn't upload their own image
-            # Use the default profile image.
-            image = user_profile.profile_image
-            bio = request.POST['bio']
-            location = request.POST['location']
+        # Update user profile
+        user_profile.bio = bio
+        user_profile.location = location
+        if profile_image:
+            user_profile.profile_image = profile_image
+        user_profile.save()
 
-            # Update the model
-            user_profile.profile_image = image
-            user_profile.bio = bio
-            user_profile.location = location
-            user_profile.save()
-
-            # Update user model
-            user.first_name = first_name
-            user.last_name = last_name
-            user.username = username
-            user.email = email
-            user.save()
-        if request.FILES.get('profile_image') != None:
-            image = request.FILES.get('profile_image')
-            bio = request.POST['bio']
-            location = request.POST['location']
-
-            # Update the model
-            user_profile.profile_image = image
-            user_profile.bio = bio
-            user_profile.location = location
-            user_profile.save()
-
-            # Update user model
-            user.first_name = first_name
-            user.last_name = last_name
-            user.username = username
-            user.email = email
-            user.save()
+        # Update user model
+        user.first_name = first_name
+        user.last_name = last_name
+        user.username = username
+        user.email = email
+        user.save()
 
         return redirect('settings')
 
     return render(request, 'settings.html', {
-        'title': 'Settings',
-        'user_profile': user_profile,
+        'title': 'Settings'
     })
+
 
 @login_required(login_url='signin')
 def upload(request):

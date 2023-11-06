@@ -4,7 +4,7 @@
 <div class="flex justify-center">
     <div class="w-full max-w-lg p-8 bg-white border border-violet-200 rounded-lg shadow sm:p-6 md:p-8 hover:bg-violet-100 dark:bg-violet-800 dark:border-violet-700 dark:hover:bg-violet-700">
         <div class="flex flex-col items-center">
-            <img class="w-48 h-48 mb-3 rounded-full shadow-lg object-cover" src="{{ user_profile.profile_image.url }}" alt="{{ user_profile.user.username }} image"/>
+            <img class="w-48 h-48 mb-3 rounded-full shadow-lg object-cover" src="{{ user.profile.profile_image.url }}" alt="{{ request.user.first_name }} {{ request.user.last_name }} image"/>
         </div>
         <form class="space-y-6" action="." method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -71,12 +71,12 @@
                     <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
                 </svg>
             </span>
-            <input name="location" type="text" id="website-admin" value="{{ user_profile.location }}" class="rounded-none rounded-r-lg bg-violet-50 border border-violet-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-violet-700 dark:border-violet-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Email" required>
+            <input name="location" type="text" id="website-admin" value="{{ user.profile.location }}" class="rounded-none rounded-r-lg bg-violet-50 border border-violet-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-violet-700 dark:border-violet-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Email" required>
             </div>
 
             <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
             <div class="flex mb-6">
-                <textarea name="bio" id="message" rows="4" class="rounded-lg bg-violet-50 border border-violet-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-violet-700 dark:border-violet-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your bio...">{{ user_profile.bio }}</textarea>
+                <textarea name="bio" id="message" rows="4" class="rounded-lg bg-violet-50 border border-violet-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-violet-700 dark:border-violet-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your bio...">{{ user.profile.bio }}</textarea>
             </div>
         
             <button type="submit" class="w-full text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2">Submit</button>
