@@ -42,11 +42,10 @@ def add_message_or_redirect_to_messages(request, searched_user_primary_key):
     user_profile = Profile.objects.get(user = user)
 
     searched_user = User.objects.get(pk=searched_user_primary_key)
-    is_messaged_before = True if Metadata.objects.filter(members__in=[request.user.id]).filter(members__in=[searched_user_primary_key]) else False
-    messages = Metadata.objects.filter(members__in=[request.user.id]).filter(members__in=[searched_user_primary_key])
+    metadata = Metadata.objects.filter(members__in=[request.user.id]).filter(members__in=[searched_user_primary_key])
 
-    if is_messaged_before:
-        return redirect('messenger:messages', metadata_primary_key=messages.first().id)
+    if metadata.exists():
+        return redirect('messenger:messages', metadata_primary_key=metadata.first().id)
 
     if request.method == 'POST':
         form = MessageForm(request.POST)
