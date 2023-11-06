@@ -1,7 +1,6 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . models import Profile, Post, LikePost, Followers
 from itertools import chain
@@ -229,47 +228,38 @@ def like_post(request):
         return redirect('index')
 
 @login_required(login_url='signin')
-def profile(request, primary_key):
-    current_user = User.objects.get(username=request.user.username)
-    current_profile = Profile.objects.get(user=current_user)
-    searched_user = User.objects.get(username=primary_key)
-    searched_user_profile = Profile.objects.get(user=searched_user)
-    user_posts = Post.objects.filter(user=primary_key)
-    user_posts_length = len(user_posts)
+def profile(request, searched_user_username):
+    searched_user = get_object_or_404(User, username=searched_user_username)
+    
+    user_posts = Post.objects.filter(user=searched_user)
+    user_posts_length = user_posts.count()
 
-    follower_username = request.user.username
-    leader_username = primary_key
+    leader_user = searched_user
 
-    user_followers = len(Followers.objects.filter(leader_username=primary_key))
-    user_following = len(Followers.objects.filter(follower_username=primary_key))
+    user_followers = Followers.objects.filter(leader=leader_user).count()
+    user_following = Followers.objects.filter(follower=leader_user).count()
 
-    # Get the users that is followed by the searched user.
-    following = Followers.objects.filter(follower=searched_user)
-    # Get the users that is following the searched user.
-    followers = Followers.objects.filter(leader=searched_user)
+    following = Followers.objects.filter(follower=leader_user)
+    followers = Followers.objects.filter(leader=leader_user)
 
-    if Followers.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
+    if Followers.objects.filter(follower=request.user, leader=searched_user).exists():
         button_text = 'Unfollow'
     else:
         button_text = 'Follow'
 
-    
-
     context = {
         'title': 'Profile',
-        'user_object': current_user,
-        'user_profile': current_profile,
         'searched_user': searched_user,
-        'searched_user_profile': searched_user_profile,
         'posts': user_posts,
         'user_posts_length': user_posts_length,
-        'button_text':button_text,
-        'user_followers':user_followers,
-        'user_following':user_following,
+        'button_text': button_text,
+        'user_followers': user_followers,
+        'user_following': user_following,
         'following': following,
         'followers': followers,
     }
     return render(request, 'profile.html', context)
+
 
 @login_required(login_url='signin')
 def follow(request):
