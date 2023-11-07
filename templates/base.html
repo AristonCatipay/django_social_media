@@ -1,20 +1,17 @@
     <!-- This will be the base file for all the html files. -->
     {% load static %}
-
+    {% load static tailwind_tags %}
     <!DOCTYPE html>
     <html lang="en">
     <!-- <head> -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Importing Tailwind -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <!-- Importing font awesome -->
-        <script src="https://kit.fontawesome.com/9fc08e307b.js" crossorigin="anonymous"></script>
         <!-- Importing Flowbite -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
         <link rel="shortcut icon" type="image/png" href="{% static 'connectify_logo.png' %}" >
         <title>{% block title %}{% endblock %} | Connectify</title>
+        {% tailwind_css %}
     </head>
     <body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-violet-500">
       {% if request.user.is_authenticated %}      
