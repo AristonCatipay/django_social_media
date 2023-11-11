@@ -5,6 +5,12 @@ from django.contrib.auth.decorators import login_required
 from . models import Profile, Post, LikePost, Followers
 from itertools import chain
 
+def home(request):
+    auth.logout(request)
+    return render(request, 'home.html', {
+        'title': 'Home',
+    })
+
 @login_required(login_url='signin')
 def index(request):
     # Get the list of usernames the current user is following
@@ -77,7 +83,7 @@ def signin(request):
         if user is not None:
             # A backend authenticated the credentials
             auth.login(request, user)
-            return redirect('/')
+            return redirect('index')
         else:
             # No backend authenticated the credentials
             messages.info(request, 'Invalid credentials.')
