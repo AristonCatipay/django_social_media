@@ -1,3 +1,4 @@
+![Connectify](/readme_images/connectify_desktop.png)
 # Connectify - a Social Media Application
 
 Connectify is a Django social media application where users can their friends and family.
@@ -28,12 +29,22 @@ pipenv install django
 
 Install MySQL Client
 ```bash
-picCpenv install mysqlclient
+pipenv install mysqlclient
 ```
 
 Install Pillow
 ```bash
 pipenv install pillow
+```
+
+Install Tailwind
+```bash
+pipenv install django-tailwind
+```
+
+Install Django Tailwind Reload
+```bash
+pipenv install django-tailwind[reload]
 ```
 
 Create a database named 'django_social_media' 
