@@ -18,3 +18,11 @@ class Like(models.Model):
 
     def __str__(self):
         return self.created_by.username
+    
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return self.created_by.username
