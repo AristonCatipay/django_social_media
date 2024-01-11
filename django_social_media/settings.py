@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'core',
     'user_profile',
+    'follower',
     'post',
     'messenger',
 ]
