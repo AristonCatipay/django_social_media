@@ -1,0 +1,42 @@
+# Ignore Django's secret key
+*.secret_key
+
+# Ignore environment-specific settings
+.env
+
+# Ignore SQLite database file
+*.sqlite3
+
+# Ignore development and system files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.bak
+*.log
+*.swp
+.DS_Store
+Thumbs.db
+
+# Ignore local development settings
+local_settings.py
+
+# Ignore IDE/Editor specific files
+.vscode/
+.idea/
+*.sublime-*
+*.sw*
+
+# Ignore deployment/build directories
+/media/
+
+# Ignore pipenv, virtualenv or other virtual environment files
+.env/
+.venv/
+venv/
+env/
+pipenv/
+
+# Ignore system-specific temporary files
+*.~
