@@ -149,7 +149,7 @@
 		{% if searched_user.username != user.username %}
 		<div class="flex flex-col items-center pb-10">
 			<div class="flex mt-4 space-x-3 md:mt-6">
-				<form action="{% url 'follow' %}" method="post">
+				<form action="{% url 'user_profile:follow_profile' %}" method="post">
 					{% csrf_token %}
 					<input type="hidden" value="{{ user.username }}" name="follower_username">
 					<input type="hidden" value="{{ searched_user.username }}" name="leader_username">

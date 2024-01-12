@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.urls import reverse
 from core.models import Post, Followers, Profile
 from itertools import chain
 
@@ -114,3 +115,25 @@ def update_password(request):
     return render(request, 'profile/change_password.html', {
         'title': 'Change Password',
     })
+
+@login_required(login_url='signin')
+def follow_profile(request):
+    if request.method == 'POST':
+        follower_username = request.POST['follower_username']
+        leader_username = request.POST['leader_username']
+        follower_id = request.POST['follower_id']
+        leader_id = request.POST['leader_id']
+
+        if Followers.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
+            delete_follower = Followers.objects.get(follower_username=follower_username, leader_username=leader_username)
+            delete_follower.delete()
+            profile_url = reverse('user_profile:view_profile', args=[leader_username])
+            return redirect(profile_url)
+        else:
+            new_follower = Followers.objects.create(follower_username=follower_username, leader_username=leader_username, follower_id=follower_id, leader_id=leader_id)
+            new_follower.save()
+            profile_url = reverse('user_profile:view_profile', args=[leader_username])
+            return redirect(profile_url)
+        
+    else:
+        return redirect('index')
