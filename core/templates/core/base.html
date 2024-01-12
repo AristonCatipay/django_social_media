@@ -22,7 +22,7 @@
          <span class="self-center text-2xl font-bold whitespace-nowrap dark:text-white">Connectify</span>
       </a>
       <div class="flex md:order-2">
-      <form class="flex items-center" action="{% url 'search' %}" method="post"> 
+      <form class="flex items-center" action="{% url 'user_profile:search_profile' %}" method="post"> 
          {% csrf_token %}  
          <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-violet-100 dark:hover:bg-violet-700 focus:outline-none focus:ring-4 focus:ring-violet-200 dark:focus:ring-violet-700 rounded-lg text-sm p-2.5 mr-1" >
             <svg class="w-5 h-5 text-gray-300 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -59,7 +59,7 @@
                   <a href="{% url 'create_post' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Add post</a>
                   </li>
                <li>
-                  <a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Profile</a>
+                  <a href="{% url 'user_profile:view_profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Profile</a>
                </li>
                <li>
                   <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Sign out</a>
