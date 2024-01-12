@@ -11,29 +11,29 @@ def home(request):
         'title': 'Home',
     })
 
-@login_required(login_url='signin')
-def index(request):
-    # Get the list of usernames the current user is following
-    user_following = Followers.objects.filter(follower=request.user).values_list('leader_username', flat=True)
+# @login_required(login_url='signin')
+# def index(request):
+#     # Get the list of usernames the current user is following
+#     user_following = Followers.objects.filter(follower=request.user).values_list('leader_username', flat=True)
 
-    # Use the list of usernames to retrieve posts
-    user_following_feed = Post.objects.filter(user__in=user_following)
+#     # Use the list of usernames to retrieve posts
+#     user_following_feed = Post.objects.filter(user__in=user_following)
 
-    # Get a queryset of users that the current user is not following and is not the current user
-    suggestion_users = User.objects.exclude(username__in=user_following).exclude(username=request.user.username).order_by('?')
+#     # Get a queryset of users that the current user is not following and is not the current user
+#     suggestion_users = User.objects.exclude(username__in=user_following).exclude(username=request.user.username).order_by('?')
 
-    # Get the profiles of the suggested users
-    suggestion_profiles = Profile.objects.filter(user__in=suggestion_users)
+#     # Get the profiles of the suggested users
+#     suggestion_profiles = Profile.objects.filter(user__in=suggestion_users)
     
-    # Get all the liked posts
-    like_post_all = LikePost.objects.all()
+#     # Get all the liked posts
+#     like_post_all = LikePost.objects.all()
 
-    return render(request, 'index.html', {
-        'title': 'Home',
-        'posts': user_following_feed,
-        'like_post': like_post_all,
-        'suggestion_profiles': suggestion_profiles[:3],  # Limit to the first 3 suggested profiles
-    })
+#     return render(request, 'index.html', {
+#         'title': 'Home',
+#         'posts': user_following_feed,
+#         'like_post': like_post_all,
+#         'suggestion_profiles': suggestion_profiles[:3],  # Limit to the first 3 suggested profiles
+#     })
 
 
 def signup(request):
@@ -134,43 +134,43 @@ def settings(request):
     })
 
 
-@login_required(login_url='signin')
-def upload(request):
-    if request.method == 'POST':
-        user = request.user.username
-        profile_id = request.user.id
-        user_id = request.user.id
-        image = request.FILES.get('post_image')
-        caption = request.POST['caption']
+# @login_required(login_url='signin')
+# def upload(request):
+#     if request.method == 'POST':
+#         user = request.user.username
+#         profile_id = request.user.id
+#         user_id = request.user.id
+#         image = request.FILES.get('post_image')
+#         caption = request.POST['caption']
 
-        new_post = Post.objects.create(user=user, image = image, caption=caption, profile_id=profile_id, user_id_id = user_id)
-        new_post.save()
-        return redirect('index')
-    else:
-        return redirect('index')
+#         new_post = Post.objects.create(user=user, image = image, caption=caption, profile_id=profile_id, user_id_id = user_id)
+#         new_post.save()
+#         return redirect('index')
+#     else:
+#         return redirect('index')
 
-@login_required(login_url='signin')
-def like_post(request):
-    username = request.user.username
-    profile_id = request.user.id
-    post_id = request.GET.get('post_id')
+# @login_required(login_url='signin')
+# def like_post(request):
+#     username = request.user.username
+#     profile_id = request.user.id
+#     post_id = request.GET.get('post_id')
 
-    post = Post.objects.get(id=post_id)
-    # Check if user liked this post already.
+#     post = Post.objects.get(id=post_id)
+#     # Check if user liked this post already.
 
-    like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
+#     like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
 
-    if like_filter == None:
-        new_like = LikePost.objects.create(post_id=post_id, username=username, profile_id=profile_id)
-        new_like.save()
-        post.no_of_likes = post.no_of_likes + 1
-        post.save() 
-        return redirect('index')
-    else:
-        like_filter.delete()
-        post.no_of_likes = post.no_of_likes - 1
-        post.save()
-        return redirect('index')
+#     if like_filter == None:
+#         new_like = LikePost.objects.create(post_id=post_id, username=username, profile_id=profile_id)
+#         new_like.save()
+#         post.no_of_likes = post.no_of_likes + 1
+#         post.save() 
+#         return redirect('index')
+#     else:
+#         like_filter.delete()
+#         post.no_of_likes = post.no_of_likes - 1
+#         post.save()
+#         return redirect('index')
 
 @login_required(login_url='signin')
 def profile(request, searched_user_username):
@@ -248,9 +248,9 @@ def search(request):
         'username_profile_list': username_profile_list,
     })
 
-@login_required(login_url='signin')
-def post(request):
-    return render(request, 'post.html')
+# @login_required(login_url='signin')
+# def post(request):
+#     return render(request, 'post.html')
 
 @login_required(login_url='signin')
 def change_password(request):
