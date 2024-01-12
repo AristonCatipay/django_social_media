@@ -69,7 +69,7 @@ def signup(request):
             messages.info(request, 'Password don\'t match.')
             return redirect('signup')
     else: 
-        return render(request, 'signup.html', {
+        return render(request, 'core/signup.html', {
             'title': 'Register',
         })
 
