@@ -89,7 +89,7 @@ def signin(request):
             messages.info(request, 'Invalid credentials.')
             return redirect('signin')
     else:
-        return render(request, 'signin.html', {
+        return render(request, 'core/signin.html', {
             'title': 'Login',
         })   
     
