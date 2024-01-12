@@ -47,10 +47,9 @@ def create_post(request):
         })
 
 @login_required(login_url='signin')
-def like_post(request):
+def like_post(request, post_id):
     username = request.user.username
     profile_id = request.user.id
-    post_id = request.GET.get('post_id')
 
     post = Post.objects.get(id=post_id)
     # Check if user liked this post already.
