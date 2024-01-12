@@ -172,38 +172,38 @@ def logout(request):
 #         post.save()
 #         return redirect('index')
 
-@login_required(login_url='signin')
-def profile(request, searched_user_username):
-    searched_user = get_object_or_404(User, username=searched_user_username)
+# @login_required(login_url='signin')
+# def profile(request, searched_user_username):
+#     searched_user = get_object_or_404(User, username=searched_user_username)
     
-    user_posts = Post.objects.filter(user=searched_user)
-    user_posts_length = user_posts.count()
+#     user_posts = Post.objects.filter(user=searched_user)
+#     user_posts_length = user_posts.count()
 
-    leader_user = searched_user
+#     leader_user = searched_user
 
-    user_followers = Followers.objects.filter(leader=leader_user).count()
-    user_following = Followers.objects.filter(follower=leader_user).count()
+#     user_followers = Followers.objects.filter(leader=leader_user).count()
+#     user_following = Followers.objects.filter(follower=leader_user).count()
 
-    following = Followers.objects.filter(follower=leader_user)
-    followers = Followers.objects.filter(leader=leader_user)
+#     following = Followers.objects.filter(follower=leader_user)
+#     followers = Followers.objects.filter(leader=leader_user)
 
-    if Followers.objects.filter(follower=request.user, leader=searched_user).exists():
-        button_text = 'Unfollow'
-    else:
-        button_text = 'Follow'
+#     if Followers.objects.filter(follower=request.user, leader=searched_user).exists():
+#         button_text = 'Unfollow'
+#     else:
+#         button_text = 'Follow'
 
-    context = {
-        'title': 'Profile',
-        'searched_user': searched_user,
-        'posts': user_posts,
-        'user_posts_length': user_posts_length,
-        'button_text': button_text,
-        'user_followers': user_followers,
-        'user_following': user_following,
-        'following': following,
-        'followers': followers,
-    }
-    return render(request, 'profile.html', context)
+#     context = {
+#         'title': 'Profile',
+#         'searched_user': searched_user,
+#         'posts': user_posts,
+#         'user_posts_length': user_posts_length,
+#         'button_text': button_text,
+#         'user_followers': user_followers,
+#         'user_following': user_following,
+#         'following': following,
+#         'followers': followers,
+#     }
+#     return render(request, 'core/profile.html', context)
 
 
 @login_required(login_url='signin')

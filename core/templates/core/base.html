@@ -59,7 +59,7 @@
                   <a href="{% url 'create_post' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Add post</a>
                   </li>
                <li>
-                  <a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Profile</a>
+                  <a href="{% url 'user_profile:view_profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Profile</a>
                </li>
                <li>
                   <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Sign out</a>
