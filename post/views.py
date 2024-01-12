@@ -22,7 +22,7 @@ def index(request):
     # Get all the liked posts
     like_post_all = LikePost.objects.all()
 
-    return render(request, 'index.html', {
+    return render(request, 'post/index.html', {
         'title': 'Home',
         'posts': user_following_feed,
         'like_post': like_post_all,
@@ -42,7 +42,7 @@ def create_post(request):
         new_post.save()
         return redirect('index')
     else:
-        return render(request, 'post.html', {
+        return render(request, 'post/create_post.html', {
             'title': 'Create Post',
         })
 
