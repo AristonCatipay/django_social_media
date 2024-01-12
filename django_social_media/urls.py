@@ -23,8 +23,6 @@ urlpatterns = [
     path('__reload__/', include('django_browser_reload.urls')),
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
-    path('messenger/', include('messenger.urls')),
     path('post/', include('post.urls')),
-]
-
-urlpatterns = urlpatterns+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('messenger/', include('messenger.urls')),
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

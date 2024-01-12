@@ -7,8 +7,11 @@
 
 module.exports = {
     content: [
-        '../../templates/**/*.html',
+        '../../core/templates/**/*.html',
         '../../messenger/templates/**/*.html',
+        '../../post/templates/**/*.html',
+        '../../follower/templates/**/*.html',
+        '../../user_profile/templates/**/*.html',
     ],
     theme: {
         extend: {},
