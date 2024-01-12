@@ -226,27 +226,27 @@ def follow(request):
     else:
         return redirect('index')
     
-@login_required(login_url='signin')
-def search(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        username_object = User.objects.filter(username__icontains=username)
+# @login_required(login_url='signin')
+# def search(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         username_object = User.objects.filter(username__icontains=username)
 
-        username_profile = []
-        username_profile_list = []
+#         username_profile = []
+#         username_profile_list = []
 
-        for user in username_object:
-            username_profile.append(user.id)
+#         for user in username_object:
+#             username_profile.append(user.id)
 
-        for id in username_profile:
-            profile_list = Profile.objects.filter(id_user=id)
-            username_profile_list.append(profile_list)
+#         for id in username_profile:
+#             profile_list = Profile.objects.filter(id_user=id)
+#             username_profile_list.append(profile_list)
 
-        username_profile_list = list(chain(*username_profile_list))
-    return render(request, 'search.html', {
-        'title': 'Search',
-        'username_profile_list': username_profile_list,
-    })
+#         username_profile_list = list(chain(*username_profile_list))
+#     return render(request, 'search.html', {
+#         'title': 'Search',
+#         'username_profile_list': username_profile_list,
+#     })
 
 # @login_required(login_url='signin')
 # def post(request):

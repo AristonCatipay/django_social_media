@@ -16,7 +16,7 @@
                             </div>
                         </a>
                         <span class="block capitalize font-semibold dark:text-white">
-                            <a href="{% url 'profile' post.user %}">
+                            <a href="{% url 'user_profile:view_profile' post.user %}">
                                 {{ post.user_id.first_name }} {{ post.user_id.last_name }}
                             </a>
                         </span>
@@ -32,7 +32,7 @@
                 <!-- post image end -->
                 <div class="p-3 border-b text-gray-500 dark:text-gray-400 font-normal">
                     <h1 class="block font-semibold dark:text-white">
-                        <a href="{% url 'profile' post.user %}">
+                        <a href="{% url 'user_profile:view_profile' post.user %}">
                             @{{ post.user }}
                         </a>
                     </h1> 
@@ -117,7 +117,7 @@
                                         </p>
                                     </div>
                                     <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                        <a href="{% url 'profile' suggestion.user %}" class="w-full text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center">View Profile</a>
+                                        <a href="{% url 'user_profile:view_profile' suggestion.user %}" class="w-full text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-200 font-medium rounded-lg text-base px-5 py-2.5 text-center">View Profile</a>
                                     </div>
                                 </div>
                             </li>

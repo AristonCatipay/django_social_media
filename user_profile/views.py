@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from core.models import Post, Followers
+from core.models import Post, Followers, Profile
+from itertools import chain
 
 @login_required(login_url='signin')
 def update_profile(request):
@@ -71,3 +72,25 @@ def view_profile(request, searched_user_username):
         'followers': followers,
     }
     return render(request, 'profile/profile.html', context)
+
+@login_required(login_url='signin')
+def search_profile(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        username_object = User.objects.filter(username__icontains=username)
+
+        username_profile = []
+        username_profile_list = []
+
+        for user in username_object:
+            username_profile.append(user.id)
+
+        for id in username_profile:
+            profile_list = Profile.objects.filter(id_user=id)
+            username_profile_list.append(profile_list)
+
+        username_profile_list = list(chain(*username_profile_list))
+    return render(request, 'profile/search.html', {
+        'title': 'Search',
+        'username_profile_list': username_profile_list,
+    })
