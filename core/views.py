@@ -7,7 +7,7 @@ from itertools import chain
 
 def home(request):
     auth.logout(request)
-    return render(request, 'home.html', {
+    return render(request, 'core/home.html', {
         'title': 'Home',
     })
 
