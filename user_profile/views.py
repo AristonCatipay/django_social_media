@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from django.contrib import messages
 from core.models import Post, Followers, Profile
 from itertools import chain
 
@@ -93,4 +94,23 @@ def search_profile(request):
     return render(request, 'profile/search.html', {
         'title': 'Search',
         'username_profile_list': username_profile_list,
+    })
+
+@login_required(login_url='signin')
+def update_password(request):
+    if request.method == 'POST':
+        new_password = request.POST['new_password']
+        confirm_new_password = request.POST['confirm_new_password']
+        
+        if new_password == confirm_new_password:
+            request.user.set_password(new_password)
+            request.user.save()
+            messages.info(request, 'Successful.')
+            return redirect('signin')
+        else:
+            messages.info(request, 'New password does not match.')
+            return redirect('user_profile:update_password')
+
+    return render(request, 'profile/change_password.html', {
+        'title': 'Change Password',
     })

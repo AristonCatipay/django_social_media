@@ -252,20 +252,20 @@ def follow(request):
 # def post(request):
 #     return render(request, 'post.html')
 
-@login_required(login_url='signin')
-def change_password(request):
-    if request.method == 'POST':
-        new_password = request.POST['new_password']
-        confirm_new_password = request.POST['confirm_new_password']
+# @login_required(login_url='signin')
+# def change_password(request):
+#     if request.method == 'POST':
+#         new_password = request.POST['new_password']
+#         confirm_new_password = request.POST['confirm_new_password']
         
-        if new_password == confirm_new_password:
-            request.user.set_password(new_password)
-            request.user.save()
-            messages.info(request, 'Successful.')
-        else:
-            messages.info(request, 'New password does not match.')
-            return redirect('change_password')
+#         if new_password == confirm_new_password:
+#             request.user.set_password(new_password)
+#             request.user.save()
+#             messages.info(request, 'Successful.')
+#         else:
+#             messages.info(request, 'New password does not match.')
+#             return redirect('change_password')
 
-    return render(request, 'change_password.html', {
-        'title': 'Change Password',
-    })
+#     return render(request, 'change_password.html', {
+#         'title': 'Change Password',
+#     })

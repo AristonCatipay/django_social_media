@@ -14,5 +14,5 @@ urlpatterns = [
     path('follow/', views.follow, name='follow'),
     # path('search/', views.search, name='search'),
     # path('post/', views.post, name='post'),
-    path('change_password/', views.change_password, name='change_password'),
+    # path('change_password/', views.change_password, name='change_password'),
 ] 
