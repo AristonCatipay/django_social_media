@@ -41,7 +41,7 @@ def signup(request):
                 return redirect('settings')
         else: 
             messages.info(request, 'Password don\'t match.')
-            return redirect('signup')
+            return redirect('core:signup')
     else: 
         return render(request, 'core/signup.html', {
             'title': 'Register',
@@ -61,7 +61,7 @@ def signin(request):
         else:
             # No backend authenticated the credentials
             messages.info(request, 'Invalid credentials.')
-            return redirect('signin')
+            return redirect('core:signin')
     else:
         return render(request, 'core/signin.html', {
             'title': 'Login',
@@ -70,4 +70,4 @@ def signin(request):
 @login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
-    return redirect('signin')
+    return redirect('core:signin')
