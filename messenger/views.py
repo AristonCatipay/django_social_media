@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from core.models import Profile
+from user_profile.models import Profile
 from .models import Metadata
 from .forms import MessageForm
 
