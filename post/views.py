@@ -47,17 +47,17 @@ def create_post(request):
         })
 
 @login_required(login_url='signin')
-def like_post(request, post_id):
+def like_post(request, post_primary_key):
     username = request.user.username
     profile_id = request.user.id
 
-    post = Post.objects.get(id=post_id)
+    post = Post.objects.get(id=post_primary_key)
     # Check if user liked this post already.
 
-    like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
+    like_filter = LikePost.objects.filter(post_id=post_primary_key, username=username).first()
 
     if like_filter == None:
-        new_like = LikePost.objects.create(post_id=post_id, username=username, profile_id=profile_id)
+        new_like = LikePost.objects.create(post_id=post_primary_key, username=username, profile_id=profile_id)
         new_like.save()
         post.no_of_likes = post.no_of_likes + 1
         post.save() 
