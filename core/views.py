@@ -38,7 +38,7 @@ def signup(request):
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
                 # Redirect the user to the settings page.
-                return redirect('settings')
+                return redirect('user_profile:update_profile')
         else: 
             messages.info(request, 'Password don\'t match.')
             return redirect('core:signup')
