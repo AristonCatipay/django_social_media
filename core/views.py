@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from . models import Profile
+from user_profile.models import Profile
 
 def home(request):
     auth.logout(request)

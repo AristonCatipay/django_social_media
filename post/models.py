@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 from user_profile.models import Profile
+import uuid
 
 # class Post(models.Model):
 #     caption = models.TextField()
