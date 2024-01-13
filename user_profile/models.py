@@ -21,3 +21,9 @@ from django.contrib.auth.models import User
 #     def __str__(self):
 #         return self.user.username
 
+# class Follow(models.Model):
+#     follower = models.ForeignKey(User, related_name='follower_id', on_delete=models.CASCADE)
+#     leader = models.ForeignKey(User, related_name='leader_id', on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.leader.username
