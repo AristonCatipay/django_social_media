@@ -57,7 +57,7 @@ def signin(request):
         if user is not None:
             # A backend authenticated the credentials
             auth.login(request, user)
-            return redirect('index')
+            return redirect('post:feed')
         else:
             # No backend authenticated the credentials
             messages.info(request, 'Invalid credentials.')
