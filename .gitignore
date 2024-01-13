@@ -29,7 +29,8 @@ local_settings.py
 *.sw*
 
 # Ignore deployment/build directories
-/media/
+/media/post_images/
+/media/profile_images/
 
 # Ignore pipenv, virtualenv or other virtual environment files
 .env/
