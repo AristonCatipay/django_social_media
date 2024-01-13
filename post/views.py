@@ -2,7 +2,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from core.models import Profile, Post, LikePost, Followers
+from post.models import Post, LikePost
+from user_profile.models import Profile, Followers
 from itertools import chain
 
 @login_required(login_url='signin')

@@ -4,7 +4,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse
-from core.models import Post, Followers, Profile
+from post.models import Post
+from user_profile.models import Followers, Profile
 from itertools import chain
 
 @login_required(login_url='signin')
