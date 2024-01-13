@@ -6,7 +6,7 @@ from core.models import Profile, Post, LikePost, Followers
 from itertools import chain
 
 @login_required(login_url='signin')
-def index(request):
+def feed(request):
     # Get the list of usernames the current user is following
     user_following = Followers.objects.filter(follower=request.user).values_list('leader_username', flat=True)
 
@@ -22,7 +22,7 @@ def index(request):
     # Get all the liked posts
     like_post_all = LikePost.objects.all()
 
-    return render(request, 'post/index.html', {
+    return render(request, 'post/feed.html', {
         'title': 'Home',
         'posts': user_following_feed,
         'like_post': like_post_all,
@@ -40,30 +40,30 @@ def create_post(request):
 
         new_post = Post.objects.create(user=user, image = image, caption=caption, profile_id=profile_id, user_id_id = user_id)
         new_post.save()
-        return redirect('index')
+        return redirect('post:feed')
     else:
         return render(request, 'post/create_post.html', {
             'title': 'Create Post',
         })
 
 @login_required(login_url='signin')
-def like_post(request, post_id):
+def like_post(request, post_primary_key):
     username = request.user.username
     profile_id = request.user.id
 
-    post = Post.objects.get(id=post_id)
+    post = Post.objects.get(id=post_primary_key)
     # Check if user liked this post already.
 
-    like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
+    like_filter = LikePost.objects.filter(post_id=post_primary_key, username=username).first()
 
     if like_filter == None:
-        new_like = LikePost.objects.create(post_id=post_id, username=username, profile_id=profile_id)
+        new_like = LikePost.objects.create(post_id=post_primary_key, username=username, profile_id=profile_id)
         new_like.save()
         post.no_of_likes = post.no_of_likes + 1
         post.save() 
-        return redirect('index')
+        return redirect('post:feed')
     else:
         like_filter.delete()
         post.no_of_likes = post.no_of_likes - 1
         post.save()
-        return redirect('index')
+        return redirect('post:feed')

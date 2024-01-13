@@ -1,8 +1,10 @@
 from django.urls import path
 from . import views
 
-urlpatterns = [
-    path('index/', views.index, name='index'),
+app_name = 'post'
+
+urlpatterns = [ 
+    path('feed/', views.feed, name='feed'),
     path('create/', views.create_post, name='create_post'),
-    path('like/<int:post_id>/', views.like_post, name='like_post'),
+    path('like/<str:post_primary_key>/', views.like_post, name='like_post'),
 ]

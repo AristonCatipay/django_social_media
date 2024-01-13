@@ -36,7 +36,7 @@ def update_profile(request):
         user.email = email
         user.save()
 
-        return redirect('settings')
+        return redirect('user_profile:update_profile')
 
     return render(request, 'profile/update_profile.html', {
         'title': 'Settings'
@@ -136,4 +136,4 @@ def follow_profile(request):
             return redirect(profile_url)
         
     else:
-        return redirect('index')
+        return redirect('post:feed')
