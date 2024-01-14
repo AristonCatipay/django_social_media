@@ -6,7 +6,7 @@
 		<div class="p-3">
             <div class="flex items-center justify-between mb-2">
                 <a href="#">
-                    <img class="w-40 h-40 rounded-full object-cover" src="{{ searched_user.profile.profile_image.url }}" alt="Jese Leos">
+                    <img class="w-40 h-40 rounded-full object-cover" src="{{ searched_user.profile.image.url }}" alt="Jese Leos">
                 </a>
                 <div>
                     <a href="{% url 'messenger:add_message_or_redirect_to_messages'  searched_user.id %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Message</a>
