@@ -22,20 +22,20 @@ def signup(request):
         if password == confirm_password:
             if User.objects.filter(email=email).exists():
                 messages.info(request, 'This email is already taken.')
-                return redirect('signup')
+                return redirect('core:signup')
             elif User.objects.filter(username=username).exists():
                 messages.info(request, 'This username is already taken.')
-                return redirect('signup')
+                return redirect('core:signup')
             else:
                 # Create the user. 
-                user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
-                user.save()
+                new_user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+                new_user.save()
                 # Log the user in using the credentials.
                 user_credentials = auth.authenticate(username=username, password=password)
                 auth.login(request, user_credentials)
                 # Create a Profile object for the new user.
-                user_model = User.objects.get(username=username)
-                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+                get_new_user = User.objects.get(username=username)
+                new_profile = Profile.objects.create(user=get_new_user)
                 new_profile.save()
                 # Redirect the user to the settings page.
                 return redirect('user_profile:update_profile')
@@ -67,7 +67,7 @@ def signin(request):
             'title': 'Login',
         })   
     
-@login_required(login_url='signin')
+@login_required()
 def logout(request):
     auth.logout(request)
     return redirect('core:signin')

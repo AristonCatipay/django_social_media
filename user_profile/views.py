@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse
 from post.models import Post
-from user_profile.models import Followers, Profile
+from user_profile.models import Follow, Profile
 from itertools import chain
 
-@login_required(login_url='signin')
+@login_required()
 def update_profile(request):
     user = request.user
     user_profile = user.profile
@@ -19,6 +19,7 @@ def update_profile(request):
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         email = request.POST.get('email')
+        gender = request.POST.get('gender')
         location = request.POST.get('location')
         bio = request.POST.get('bio')
         profile_image = request.FILES.get('profile_image')
@@ -26,6 +27,7 @@ def update_profile(request):
         # Update user profile
         user_profile.bio = bio
         user_profile.location = location
+        user_profile.gender = gender
         if profile_image:
             user_profile.profile_image = profile_image
         user_profile.save()
@@ -43,7 +45,7 @@ def update_profile(request):
         'title': 'Settings'
     })
 
-@login_required(login_url='signin')
+@login_required()
 def view_profile(request, searched_user_username):
     searched_user = get_object_or_404(User, username=searched_user_username)
     
@@ -52,13 +54,13 @@ def view_profile(request, searched_user_username):
 
     leader_user = searched_user
 
-    user_followers = Followers.objects.filter(leader=leader_user).count()
-    user_following = Followers.objects.filter(follower=leader_user).count()
+    user_followers = Follow.objects.filter(leader=leader_user).count()
+    user_following = Follow.objects.filter(follower=leader_user).count()
 
-    following = Followers.objects.filter(follower=leader_user)
-    followers = Followers.objects.filter(leader=leader_user)
+    following = Follow.objects.filter(follower=leader_user)
+    followers = Follow.objects.filter(leader=leader_user)
 
-    if Followers.objects.filter(follower=request.user, leader=searched_user).exists():
+    if Follow.objects.filter(follower=request.user, leader=searched_user).exists():
         button_text = 'Unfollow'
     else:
         button_text = 'Follow'
@@ -76,29 +78,25 @@ def view_profile(request, searched_user_username):
     }
     return render(request, 'profile/profile.html', context)
 
-@login_required(login_url='signin')
+@login_required()
 def search_profile(request):
     if request.method == 'POST':
         username = request.POST['username']
-        username_object = User.objects.filter(username__icontains=username)
+        users_with_similar_username = User.objects.filter(username__icontains=username)
 
-        username_profile = []
-        username_profile_list = []
+        user_profile_list = []
 
-        for user in username_object:
-            username_profile.append(user.id)
+        for user in users_with_similar_username:
+            user_profile = Profile.objects.filter(user=user)
+            user_profile_list.append(user_profile)
 
-        for id in username_profile:
-            profile_list = Profile.objects.filter(id_user=id)
-            username_profile_list.append(profile_list)
-
-        username_profile_list = list(chain(*username_profile_list))
+        user_profile_list = list(chain(*user_profile_list))
     return render(request, 'profile/search.html', {
         'title': 'Search',
-        'username_profile_list': username_profile_list,
+        'user_profile_list': user_profile_list,
     })
 
-@login_required(login_url='signin')
+@login_required()
 def update_password(request):
     if request.method == 'POST':
         new_password = request.POST['new_password']
@@ -117,23 +115,24 @@ def update_password(request):
         'title': 'Change Password',
     })
 
-@login_required(login_url='signin')
+@login_required()
 def follow_profile(request):
     if request.method == 'POST':
-        follower_username = request.POST['follower_username']
-        leader_username = request.POST['leader_username']
         follower_id = request.POST['follower_id']
         leader_id = request.POST['leader_id']
 
-        if Followers.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
-            delete_follower = Followers.objects.get(follower_username=follower_username, leader_username=leader_username)
+        user_follower = User.objects.get(id=follower_id)
+        user_leader = User.objects.get(id=leader_id)
+
+        if Follow.objects.filter(follower=user_follower, leader=user_leader).first():
+            delete_follower = Follow.objects.get(follower=user_follower, leader=user_leader)
             delete_follower.delete()
-            profile_url = reverse('user_profile:view_profile', args=[leader_username])
+            profile_url = reverse('user_profile:view_profile', args=[user_leader.username])
             return redirect(profile_url)
         else:
-            new_follower = Followers.objects.create(follower_username=follower_username, leader_username=leader_username, follower_id=follower_id, leader_id=leader_id)
+            new_follower = Follow.objects.create(follower=user_follower, leader=user_leader)
             new_follower.save()
-            profile_url = reverse('user_profile:view_profile', args=[leader_username])
+            profile_url = reverse('user_profile:view_profile', args=[user_leader.username])
             return redirect(profile_url)
         
     else:
