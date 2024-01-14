@@ -82,22 +82,18 @@ def view_profile(request, searched_user_username):
 def search_profile(request):
     if request.method == 'POST':
         username = request.POST['username']
-        username_object = User.objects.filter(username__icontains=username)
+        users_with_similar_username = User.objects.filter(username__icontains=username)
 
-        username_profile = []
-        username_profile_list = []
+        user_profile_list = []
 
-        for user in username_object:
-            username_profile.append(user.id)
+        for user in users_with_similar_username:
+            user_profile = Profile.objects.filter(user=user)
+            user_profile_list.append(user_profile)
 
-        for id in username_profile:
-            profile_list = Profile.objects.filter(id_user=id)
-            username_profile_list.append(profile_list)
-
-        username_profile_list = list(chain(*username_profile_list))
+        user_profile_list = list(chain(*user_profile_list))
     return render(request, 'profile/search.html', {
         'title': 'Search',
-        'username_profile_list': username_profile_list,
+        'user_profile_list': user_profile_list,
     })
 
 @login_required()
