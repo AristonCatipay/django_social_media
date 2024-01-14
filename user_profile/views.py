@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse
 from post.models import Post
-from user_profile.models import Followers, Profile
+from user_profile.models import Follow, Profile
 from itertools import chain
 
 @login_required(login_url='signin')
@@ -54,13 +54,13 @@ def view_profile(request, searched_user_username):
 
     leader_user = searched_user
 
-    user_followers = Followers.objects.filter(leader=leader_user).count()
-    user_following = Followers.objects.filter(follower=leader_user).count()
+    user_followers = Follow.objects.filter(leader=leader_user).count()
+    user_following = Follow.objects.filter(follower=leader_user).count()
 
-    following = Followers.objects.filter(follower=leader_user)
-    followers = Followers.objects.filter(leader=leader_user)
+    following = Follow.objects.filter(follower=leader_user)
+    followers = Follow.objects.filter(leader=leader_user)
 
-    if Followers.objects.filter(follower=request.user, leader=searched_user).exists():
+    if Follow.objects.filter(follower=request.user, leader=searched_user).exists():
         button_text = 'Unfollow'
     else:
         button_text = 'Follow'
@@ -127,13 +127,13 @@ def follow_profile(request):
         follower_id = request.POST['follower_id']
         leader_id = request.POST['leader_id']
 
-        if Followers.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
-            delete_follower = Followers.objects.get(follower_username=follower_username, leader_username=leader_username)
+        if Follow.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
+            delete_follower = Follow.objects.get(follower_username=follower_username, leader_username=leader_username)
             delete_follower.delete()
             profile_url = reverse('user_profile:view_profile', args=[leader_username])
             return redirect(profile_url)
         else:
-            new_follower = Followers.objects.create(follower_username=follower_username, leader_username=leader_username, follower_id=follower_id, leader_id=leader_id)
+            new_follower = Follow.objects.create(follower_username=follower_username, leader_username=leader_username, follower_id=follower_id, leader_id=leader_id)
             new_follower.save()
             profile_url = reverse('user_profile:view_profile', args=[leader_username])
             return redirect(profile_url)

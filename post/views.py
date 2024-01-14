@@ -3,13 +3,13 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from post.models import Post, LikePost
-from user_profile.models import Profile, Followers
+from user_profile.models import Profile, Follow
 from itertools import chain
 
 @login_required(login_url='signin')
 def feed(request):
     # Get the list of usernames the current user is following
-    user_following = Followers.objects.filter(follower=request.user).values_list('leader_username', flat=True)
+    user_following = Follow.objects.filter(follower=request.user).values_list('leader_username', flat=True)
 
     # Use the list of usernames to retrieve posts
     user_following_feed = Post.objects.filter(user__in=user_following)

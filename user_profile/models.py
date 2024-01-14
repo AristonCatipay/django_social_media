@@ -21,12 +21,12 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-# class Follow(models.Model):
-#     follower = models.ForeignKey(User, related_name='follower_id', on_delete=models.CASCADE)
-#     leader = models.ForeignKey(User, related_name='leader_id', on_delete=models.CASCADE)
+class Follow(models.Model):
+    follower = models.ForeignKey(User, related_name='follower_id', on_delete=models.CASCADE)
+    leader = models.ForeignKey(User, related_name='leader_id', on_delete=models.CASCADE)
 
-#     def __str__(self):
-#         return self.leader.username
+    def __str__(self):
+        return self.leader.username
 
 # class Profile(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -38,11 +38,11 @@ class Profile(models.Model):
 #     def __str__(self):
 #         return self.user.username
     
-class Followers(models.Model):
-    follower_username = models.CharField(max_length=100)
-    leader_username = models.CharField(max_length=100)
-    follower = models.ForeignKey(User, related_name='follower_id', on_delete=models.CASCADE)
-    leader = models.ForeignKey(User, related_name='leader_id', on_delete=models.CASCADE)
+# class Followers(models.Model):
+#     follower_username = models.CharField(max_length=100)
+#     leader_username = models.CharField(max_length=100)
+#     follower = models.ForeignKey(User, related_name='follower_id', on_delete=models.CASCADE)
+#     leader = models.ForeignKey(User, related_name='leader_id', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.leader_username
+#     def __str__(self):
+#         return self.leader_username
