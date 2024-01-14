@@ -19,6 +19,7 @@ def update_profile(request):
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         email = request.POST.get('email')
+        gender = request.POST.get('gender')
         location = request.POST.get('location')
         bio = request.POST.get('bio')
         profile_image = request.FILES.get('profile_image')
@@ -26,6 +27,7 @@ def update_profile(request):
         # Update user profile
         user_profile.bio = bio
         user_profile.location = location
+        user_profile.gender = gender
         if profile_image:
             user_profile.profile_image = profile_image
         user_profile.save()

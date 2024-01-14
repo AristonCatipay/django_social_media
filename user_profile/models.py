@@ -9,7 +9,7 @@ class Profile(models.Model):
     GENDER_CHOICES = [
         (MALE, 'Male'),
         (FEMALE, 'Female'),
-        (OTHERS, 'O'),
+        (OTHERS, 'Others'),
     ]
 
     bio = models.TextField(blank=True)
