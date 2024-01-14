@@ -6,7 +6,7 @@ from post.models import Post, LikePost
 from user_profile.models import Profile, Follow
 from itertools import chain
 
-@login_required(login_url='signin')
+@login_required()
 def feed(request):
     # Get the list of usernames the current user is following
     user_following = Follow.objects.filter(follower=request.user).values_list('leader_username', flat=True)
@@ -30,7 +30,7 @@ def feed(request):
         'suggestion_profiles': suggestion_profiles[:3],  # Limit to the first 3 suggested profiles
     })
 
-@login_required(login_url='signin')
+@login_required()
 def create_post(request):
     if request.method == 'POST':
         user = request.user.username
@@ -47,7 +47,7 @@ def create_post(request):
             'title': 'Create Post',
         })
 
-@login_required(login_url='signin')
+@login_required()
 def like_post(request, post_primary_key):
     username = request.user.username
     profile_id = request.user.id

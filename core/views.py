@@ -67,7 +67,7 @@ def signin(request):
             'title': 'Login',
         })   
     
-@login_required(login_url='signin')
+@login_required()
 def logout(request):
     auth.logout(request)
     return redirect('core:signin')

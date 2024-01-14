@@ -8,7 +8,7 @@ from post.models import Post
 from user_profile.models import Follow, Profile
 from itertools import chain
 
-@login_required(login_url='signin')
+@login_required()
 def update_profile(request):
     user = request.user
     user_profile = user.profile
@@ -45,7 +45,7 @@ def update_profile(request):
         'title': 'Settings'
     })
 
-@login_required(login_url='signin')
+@login_required()
 def view_profile(request, searched_user_username):
     searched_user = get_object_or_404(User, username=searched_user_username)
     
@@ -78,7 +78,7 @@ def view_profile(request, searched_user_username):
     }
     return render(request, 'profile/profile.html', context)
 
-@login_required(login_url='signin')
+@login_required()
 def search_profile(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -100,7 +100,7 @@ def search_profile(request):
         'username_profile_list': username_profile_list,
     })
 
-@login_required(login_url='signin')
+@login_required()
 def update_password(request):
     if request.method == 'POST':
         new_password = request.POST['new_password']
@@ -119,7 +119,7 @@ def update_password(request):
         'title': 'Change Password',
     })
 
-@login_required(login_url='signin')
+@login_required()
 def follow_profile(request):
     if request.method == 'POST':
         follower_username = request.POST['follower_username']
