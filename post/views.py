@@ -9,7 +9,7 @@ from itertools import chain
 @login_required()
 def feed(request):
     # Get the list of usernames the current user is following
-    user_following = Follow.objects.filter(follower=request.user).values_list('leader_username', flat=True)
+    user_following = Follow.objects.filter(follower=request.user).values_list('leader__username', flat=True)
 
     # Use the list of usernames to retrieve posts
     user_following_feed = Post.objects.filter(user__in=user_following)

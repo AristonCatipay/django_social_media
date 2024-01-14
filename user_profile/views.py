@@ -122,20 +122,21 @@ def update_password(request):
 @login_required()
 def follow_profile(request):
     if request.method == 'POST':
-        follower_username = request.POST['follower_username']
-        leader_username = request.POST['leader_username']
         follower_id = request.POST['follower_id']
         leader_id = request.POST['leader_id']
 
-        if Follow.objects.filter(follower_username=follower_username, leader_username=leader_username).first():
-            delete_follower = Follow.objects.get(follower_username=follower_username, leader_username=leader_username)
+        user_follower = User.objects.get(id=follower_id)
+        user_leader = User.objects.get(id=leader_id)
+
+        if Follow.objects.filter(follower=user_follower, leader=user_leader).first():
+            delete_follower = Follow.objects.get(follower=user_follower, leader=user_leader)
             delete_follower.delete()
-            profile_url = reverse('user_profile:view_profile', args=[leader_username])
+            profile_url = reverse('user_profile:view_profile', args=[user_leader.username])
             return redirect(profile_url)
         else:
-            new_follower = Follow.objects.create(follower_username=follower_username, leader_username=leader_username, follower_id=follower_id, leader_id=leader_id)
+            new_follower = Follow.objects.create(follower=user_follower, leader=user_leader)
             new_follower.save()
-            profile_url = reverse('user_profile:view_profile', args=[leader_username])
+            profile_url = reverse('user_profile:view_profile', args=[user_leader.username])
             return redirect(profile_url)
         
     else:
