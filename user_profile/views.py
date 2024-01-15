@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse
-from post.models import Post
+from post.models import Post, Like
 from user_profile.models import Follow, Profile
 from itertools import chain
 
@@ -54,6 +54,9 @@ def view_profile(request, searched_user_username):
 
     leader_user = searched_user
 
+    # Get all the liked posts
+    like_post_all = Like.objects.all()
+
     user_followers = Follow.objects.filter(leader=leader_user).count()
     user_following = Follow.objects.filter(follower=leader_user).count()
 
@@ -70,6 +73,7 @@ def view_profile(request, searched_user_username):
         'searched_user': searched_user,
         'posts': user_posts,
         'user_posts_length': user_posts_length,
+        'like_post': like_post_all,
         'button_text': button_text,
         'user_followers': user_followers,
         'user_following': user_following,
