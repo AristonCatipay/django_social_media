@@ -7,6 +7,7 @@ import uuid
 class Post(models.Model):
     caption = models.TextField()
     image = models.ImageField(upload_to='post_images')
+    no_of_likes = models.IntegerField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
     last_update = models.DateTimeField(auto_now=True)

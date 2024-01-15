@@ -69,7 +69,7 @@
                             <div class="flex -space-x-4">
                                 {% for like in like_post %}
                                         {% if like.post_id == post.id %}
-                                        <img class="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800 object-cover" src="{{ like.profile.profile_image.url }}" alt="">
+                                        <img class="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800 object-cover" src="{{ like.profile.image.url }}" alt="">
                                         {% endif %}
                                         {% endfor %}                              
                                     </div> 
