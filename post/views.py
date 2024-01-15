@@ -10,9 +10,11 @@ from itertools import chain
 def feed(request):
     # Get the list of usernames the current user is following
     user_following = Follow.objects.filter(follower=request.user).values_list('leader__username', flat=True)
+    print(user_following.count())
 
     # Use the list of usernames to retrieve posts
-    user_following_feed = Post.objects.filter(created_by__in=user_following)
+    user_following_feed = Post.objects.filter(created_by__username__in=user_following)
+    print(user_following_feed.count())
 
     # Get a queryset of users that the current user is not following and is not the current user
     suggestion_users = User.objects.exclude(username__in=user_following).exclude(username=request.user.username).order_by('?')

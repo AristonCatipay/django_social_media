@@ -16,7 +16,7 @@
                             </div>
                         </a>
                         <span class="block capitalize font-semibold dark:text-white">
-                            <a href="{% url 'user_profile:view_profile' post.user %}">
+                            <a href="{% url 'user_profile:view_profile' post.created_by %}">
                                 {{ post.user_id.first_name }} {{ post.user_id.last_name }}
                             </a>
                         </span>
@@ -32,7 +32,7 @@
                 <!-- post image end -->
                 <div class="p-3 border-b text-gray-500 dark:text-gray-400 font-normal">
                     <h1 class="block font-semibold dark:text-white">
-                        <a href="{% url 'user_profile:view_profile' post.user %}">
+                        <a href="{% url 'user_profile:view_profile' post.created_by %}">
                             @{{ post.user }}
                         </a>
                     </h1> 
