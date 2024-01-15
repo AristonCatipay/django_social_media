@@ -12,7 +12,7 @@ def feed(request):
     user_following = Follow.objects.filter(follower=request.user).values_list('leader__username', flat=True)
 
     # Use the list of usernames to retrieve posts
-    user_following_feed = Post.objects.filter(user__in=user_following)
+    user_following_feed = Post.objects.filter(created_by__in=user_following)
 
     # Get a queryset of users that the current user is not following and is not the current user
     suggestion_users = User.objects.exclude(username__in=user_following).exclude(username=request.user.username).order_by('?')
@@ -33,13 +33,10 @@ def feed(request):
 @login_required()
 def create_post(request):
     if request.method == 'POST':
-        user = request.user.username
-        profile_id = request.user.id
-        user_id = request.user.id
         image = request.FILES.get('post_image')
         caption = request.POST['caption']
 
-        new_post = Post.objects.create(user=user, image = image, caption=caption, profile_id=profile_id, user_id_id = user_id)
+        new_post = Post.objects.create(created_by=request.user, image=image, caption=caption)
         new_post.save()
         return redirect('post:feed')
     else:
