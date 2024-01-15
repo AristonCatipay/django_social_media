@@ -49,7 +49,7 @@ def update_profile(request):
 def view_profile(request, searched_user_username):
     searched_user = get_object_or_404(User, username=searched_user_username)
     
-    user_posts = Post.objects.filter(user=searched_user)
+    user_posts = Post.objects.filter(created_by=searched_user)
     user_posts_length = user_posts.count()
 
     leader_user = searched_user
