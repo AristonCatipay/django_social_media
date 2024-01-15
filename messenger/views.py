@@ -1,10 +1,12 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from user_profile.models import Profile
 from .models import Metadata
 from .forms import MessageForm
 
+@login_required()
 def index(request):
     query = request.GET.get('query', '')
     users = User.objects.filter(is_staff=False, is_superuser=False)
@@ -19,6 +21,7 @@ def index(request):
         'users': users,
     })
 
+@login_required()
 def inbox(request):
     # Get all the conversations connected to the item where the user is a member.
     metadata = Metadata.objects.filter(members__in=[request.user.id])
@@ -28,6 +31,7 @@ def inbox(request):
         'metadata': metadata,
     })
 
+@login_required()
 def add_message_or_redirect_to_messages(request, searched_user_primary_key):
     searched_user = User.objects.get(pk=searched_user_primary_key)
     metadata = Metadata.objects.filter(members__in=[request.user.id]).filter(members__in=[searched_user_primary_key])
@@ -60,6 +64,7 @@ def add_message_or_redirect_to_messages(request, searched_user_primary_key):
         'reciever': searched_user,
     })
 
+@login_required()
 def messages(request, metadata_primary_key):
     metadata = Metadata.objects.filter(members__in=[request.user.id]).get(pk=metadata_primary_key)
     reciever = metadata.members.exclude(id=request.user.id).first()
