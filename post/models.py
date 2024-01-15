@@ -15,21 +15,22 @@ class Post(models.Model):
     def __str__(self):
         return self.created_by.username
     
-# class Like(models.Model):
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-#     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-#     created_at = models.DateTimeField(default=datetime.now)
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=datetime.now)
 
-#     def __str__(self):
-#         return self.created_by.username
+    def __str__(self):
+        return self.created_by.username
     
-# class Comment(models.Model):
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-#     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-#     created_at = models.DateTimeField(default=datetime.now)
+class Comment(models.Model):
+    comment = models.TextField()
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=datetime.now)
 
-#     def __str__(self):
-#         return self.created_by.username
+    def __str__(self):
+        return self.created_by.username
 
 # class Post(models.Model):
 #     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -44,10 +45,10 @@ class Post(models.Model):
 #     def __str__(self):
 #         return self.user
     
-class LikePost(models.Model):
-    username = models.CharField(max_length=100)
-    profile = models.ForeignKey(Profile, related_name='profile_id_like_post', on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, related_name='post_id_like_post', on_delete=models.CASCADE)
+# class LikePost(models.Model):
+#     username = models.CharField(max_length=100)
+#     profile = models.ForeignKey(Profile, related_name='profile_id_like_post', on_delete=models.CASCADE)
+#     post = models.ForeignKey(Post, related_name='post_id_like_post', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.username
+#     def __str__(self):
+#         return self.username

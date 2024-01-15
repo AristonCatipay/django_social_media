@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from post.models import Post, LikePost
+from post.models import Post, Like
 from user_profile.models import Profile, Follow
 from itertools import chain
 
@@ -21,7 +21,7 @@ def feed(request):
     suggestion_profiles = Profile.objects.filter(user__in=suggestion_users)
     
     # Get all the liked posts
-    like_post_all = LikePost.objects.all()
+    like_post_all = Like.objects.all()
 
     return render(request, 'post/feed.html', {
         'title': 'Home',
@@ -52,10 +52,10 @@ def like_post(request, post_primary_key):
     post = Post.objects.get(id=post_primary_key)
     # Check if user liked this post already.
 
-    like_filter = LikePost.objects.filter(post_id=post_primary_key, username=username).first()
+    like_filter = Like.objects.filter(post_id=post_primary_key, username=username).first()
 
     if like_filter == None:
-        new_like = LikePost.objects.create(post_id=post_primary_key, username=username, profile_id=profile_id)
+        new_like = Like.objects.create(post_id=post_primary_key, username=username, profile_id=profile_id)
         new_like.save()
         post.no_of_likes = post.no_of_likes + 1
         post.save() 
