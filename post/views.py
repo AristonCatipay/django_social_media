@@ -32,17 +32,22 @@ def feed(request):
 
 @login_required()
 def create_post(request):
-    if request.method == 'POST':
-        image = request.FILES.get('post_image')
-        caption = request.POST['caption']
+    try:
+        if request.method == 'POST':
+            image = request.FILES.get('post_image')
+            caption = request.POST['caption']
 
-        new_post = Post.objects.create(created_by=request.user, image=image, caption=caption, no_of_likes=0)
-        new_post.save()
-        return redirect('post:feed')
-    else:
-        return render(request, 'post/create_post.html', {
-            'title': 'Create Post',
-        })
+            new_post = Post.objects.create(created_by=request.user, image=image, caption=caption, no_of_likes=0)
+            new_post.save()
+            messages.success(request, 'Post created successfully! Your content is now live.')
+            return redirect('post:feed')
+        else:
+            return render(request, 'post/create_post.html', {
+                'title': 'Create Post',
+            })
+    except Exception as e:
+        messages.error(request, f'Failed to create post. {e}')
+
 
 @login_required()
 def like_post(request, post_primary_key):

@@ -13,37 +13,41 @@ def update_profile(request):
     user = request.user
     user_profile = user.profile
 
-    if request.method == 'POST':
-        # Get form data
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        gender = request.POST.get('gender')
-        location = request.POST.get('location')
-        bio = request.POST.get('bio')
-        profile_image = request.FILES.get('profile_image')
+    try:
+        if request.method == 'POST':
+            # Get form data
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            gender = request.POST.get('gender')
+            location = request.POST.get('location')
+            bio = request.POST.get('bio')
+            profile_image = request.FILES.get('profile_image')
 
-        # Update user profile
-        user_profile.bio = bio
-        user_profile.location = location
-        user_profile.gender = gender
-        if profile_image:
-            user_profile.profile_image = profile_image
-        user_profile.save()
+            # Update user profile
+            user_profile.bio = bio
+            user_profile.location = location
+            user_profile.gender = gender
+            if profile_image:
+                user_profile.profile_image = profile_image
+            user_profile.save()
 
-        # Update user model
-        user.first_name = first_name
-        user.last_name = last_name
-        user.username = username
-        user.email = email
-        user.save()
+            # Update user model
+            user.first_name = first_name
+            user.last_name = last_name
+            user.username = username
+            user.email = email
+            user.save()
+            messages.success(request, "Profile updated successfully! Your changes have been saved.")
 
-        return redirect('user_profile:update_profile')
+            return redirect('user_profile:update_profile')
 
-    return render(request, 'profile/update_profile.html', {
-        'title': 'Settings'
-    })
+        return render(request, 'profile/update_profile.html', {
+            'title': 'Settings'
+        })
+    except Exception as e:
+        messages.error(request, f"Failed to update profile. {e}")
 
 @login_required()
 def view_profile(request, searched_user_username):
@@ -102,22 +106,25 @@ def search_profile(request):
 
 @login_required()
 def update_password(request):
-    if request.method == 'POST':
-        new_password = request.POST['new_password']
-        confirm_new_password = request.POST['confirm_new_password']
-        
-        if new_password == confirm_new_password:
-            request.user.set_password(new_password)
-            request.user.save()
-            messages.info(request, 'Successful.')
-            return redirect('signin')
-        else:
-            messages.info(request, 'New password does not match.')
-            return redirect('user_profile:update_password')
+    try:
+        if request.method == 'POST':
+            new_password = request.POST['new_password']
+            confirm_new_password = request.POST['confirm_new_password']
+            
+            if new_password == confirm_new_password:
+                request.user.set_password(new_password)
+                request.user.save()
+                messages.success(request, 'Password updated successfully!')
+                return redirect('signin')
+            else:
+                messages.error(request, 'Failed to update password. New password does not match.')
+                return redirect('user_profile:update_password')
 
-    return render(request, 'profile/change_password.html', {
-        'title': 'Change Password',
-    })
+        return render(request, 'profile/change_password.html', {
+            'title': 'Change Password',
+        })
+    except Exception as e:
+        messages.error(request, 'Failed to update password.')
 
 @login_required()
 def follow_profile(request):
@@ -132,11 +139,13 @@ def follow_profile(request):
             delete_follower = Follow.objects.get(follower=user_follower, leader=user_leader)
             delete_follower.delete()
             profile_url = reverse('user_profile:view_profile', args=[user_leader.username])
+            messages.success(request, f'Success! You have successfully unfollowed {user_follower.username}. Feel free to explore other connections.')
             return redirect(profile_url)
         else:
             new_follower = Follow.objects.create(follower=user_follower, leader=user_leader)
             new_follower.save()
             profile_url = reverse('user_profile:view_profile', args=[user_leader.username])
+            messages.success(request, f'Success! You are now following {user_follower.username}. Stay connected for updates and posts!')
             return redirect(profile_url)
         
     else:

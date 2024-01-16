@@ -21,10 +21,10 @@ def signup(request):
 
         if password == confirm_password:
             if User.objects.filter(email=email).exists():
-                messages.info(request, 'This email is already taken.')
+                messages.error(request, 'This email is already taken.')
                 return redirect('core:signup')
             elif User.objects.filter(username=username).exists():
-                messages.info(request, 'This username is already taken.')
+                messages.error(request, 'This username is already taken.')
                 return redirect('core:signup')
             else:
                 # Create the user. 
@@ -38,9 +38,10 @@ def signup(request):
                 new_profile = Profile.objects.create(user=get_new_user)
                 new_profile.save()
                 # Redirect the user to the settings page.
+                messages.success(request, 'Account created successfully! Welcome to our community.')
                 return redirect('user_profile:update_profile')
         else: 
-            messages.info(request, 'Password don\'t match.')
+            messages.error(request, 'Password don\'t match.')
             return redirect('core:signup')
     else: 
         return render(request, 'core/signup.html', {
@@ -57,10 +58,11 @@ def signin(request):
         if user is not None:
             # A backend authenticated the credentials
             auth.login(request, user)
+            messages.success(request, 'Login successful. Welcome back!')
             return redirect('post:feed')
         else:
             # No backend authenticated the credentials
-            messages.info(request, 'Invalid credentials.')
+            messages.error(request, 'Invalid credentials. Please check your username and password.')
             return redirect('core:signin')
     else:
         return render(request, 'core/signin.html', {
@@ -70,4 +72,5 @@ def signin(request):
 @login_required()
 def logout(request):
     auth.logout(request)
+    messages.success(request, 'Logout successful. Have a great day!')
     return redirect('core:signin')
