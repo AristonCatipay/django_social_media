@@ -139,11 +139,13 @@ def follow_profile(request):
             delete_follower = Follow.objects.get(follower=user_follower, leader=user_leader)
             delete_follower.delete()
             profile_url = reverse('user_profile:view_profile', args=[user_leader.username])
+            messages.success(request, f'Success! You have successfully unfollowed {user_follower.username}. Feel free to explore other connections.')
             return redirect(profile_url)
         else:
             new_follower = Follow.objects.create(follower=user_follower, leader=user_leader)
             new_follower.save()
             profile_url = reverse('user_profile:view_profile', args=[user_leader.username])
+            messages.success(request, f'Success! You are now following {user_follower.username}. Stay connected for updates and posts!')
             return redirect(profile_url)
         
     else:
