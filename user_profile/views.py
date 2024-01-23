@@ -106,25 +106,30 @@ def search_profile(request):
 
 @login_required()
 def update_password(request):
-    try:
-        if request.method == 'POST':
+    if request.method == 'POST':
+        try:
+            old_password = request.POST['old_password']
             new_password = request.POST['new_password']
             confirm_new_password = request.POST['confirm_new_password']
             
-            if new_password == confirm_new_password:
-                request.user.set_password(new_password)
-                request.user.save()
-                messages.success(request, 'Password updated successfully!')
-                return redirect('signin')
+            if request.user.check_password(old_password):
+                if new_password == confirm_new_password:
+                    request.user.set_password(new_password)
+                    request.user.save()
+                    messages.success(request, 'Password updated successfully!')
+                    return redirect('signin')
+                else:
+                    messages.error(request, 'Failed to update password. New password does not match.')
+                    return redirect('user_profile:update_password')
             else:
-                messages.error(request, 'Failed to update password. New password does not match.')
+                messages.error(request, 'Failed to update password. Old password does not match.')
                 return redirect('user_profile:update_password')
+        except Exception as e:
+            messages.error(request, f'Failed to update password. {e}')
 
-        return render(request, 'profile/change_password.html', {
-            'title': 'Change Password',
-        })
-    except Exception as e:
-        messages.error(request, 'Failed to update password.')
+    return render(request, 'profile/change_password.html', {
+        'title': 'Change Password',
+    })
 
 @login_required()
 def follow_profile(request):
