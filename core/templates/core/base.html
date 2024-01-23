@@ -62,6 +62,9 @@
                   <a href="{% url 'user_profile:view_profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Profile</a>
                </li>
                <li>
+                  <a href="{% url 'messenger:inbox' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Inbox</a>
+               </li>
+               <li>
                   <a href="{% url 'core:logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-100 dark:hover:bg-violet-600 dark:text-violet-200 dark:hover:text-white">Sign out</a>
                </li>
             </ul>

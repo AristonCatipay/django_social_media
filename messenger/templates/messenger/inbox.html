@@ -1,4 +1,4 @@
-{%extends 'base.html'%}
+{%extends 'core/base.html'%}
 {% block title %}{{ title }}{% endblock %}
 {% block content %} 
 <div class="flex justify-center">
@@ -10,7 +10,7 @@
                     <div id="toast-notification" class="w-full m-1 p-3 border-violet-100 rounded-lg shadow dark:bg-violet-800 dark:border-violet-100" role="alert">
                         <div class="flex items-center">
                             <div class="relative inline-block shrink-0">
-                                <img class="w-16 h-16 object-cover rounded-full" src="{{ metadata.reciever.profile.profile_image.url }}" alt="{{ conversation.item.name }}"/>
+                                <img class="w-16 h-16 object-cover rounded-full" src="{{ metadata.reciever.profile.image.url }}" alt="{{ conversation.item.name }}"/>
                             </div>
                             {% for member in metadata.members.all %}
                                 {% if member != request.user %}
