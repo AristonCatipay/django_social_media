@@ -32,8 +32,8 @@ def feed(request):
 
 @login_required()
 def create_post(request):
-    try:
-        if request.method == 'POST':
+    if request.method == 'POST':
+        try:
             image = request.FILES.get('post_image')
             caption = request.POST['caption']
 
@@ -41,12 +41,13 @@ def create_post(request):
             new_post.save()
             messages.success(request, 'Post created successfully! Your content is now live.')
             return redirect('post:feed')
-        else:
-            return render(request, 'post/create_post.html', {
-                'title': 'Create Post',
-            })
-    except Exception as e:
-        messages.error(request, f'Failed to create post. {e}')
+        except Exception as e:
+            messages.error(request, f'Failed to create post. {e}')
+            return redirect('post:create_post')
+    else:
+        return render(request, 'post/create_post.html', {
+            'title': 'Create Post',
+        })
 
 
 @login_required()

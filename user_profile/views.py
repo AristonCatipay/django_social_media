@@ -13,8 +13,8 @@ def update_profile(request):
     user = request.user
     user_profile = user.profile
 
-    try:
-        if request.method == 'POST':
+    if request.method == 'POST':
+        try:
             # Get form data
             first_name = request.POST.get('first_name')
             last_name = request.POST.get('last_name')
@@ -43,11 +43,11 @@ def update_profile(request):
 
             return redirect('user_profile:update_profile')
 
-        return render(request, 'profile/update_profile.html', {
-            'title': 'Settings'
-        })
-    except Exception as e:
-        messages.error(request, f"Failed to update profile. {e}")
+        except Exception as e:
+            messages.error(request, f"Failed to update profile. {e}")
+    return render(request, 'profile/update_profile.html', {
+        'title': 'Settings'
+    })
 
 @login_required()
 def view_profile(request, searched_user_username):
