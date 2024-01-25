@@ -1,8 +1,8 @@
 {% extends 'core/base.html'%}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<div class="container m-auto max-w-screen-xl">
-    <div class="lg:flex justify-center lg:space-x-10 lg:space-y-0 space-y-5">
+<div class="container mx-auto max-w-screen-lg">
+    <div class="lg:flex justify-center space-x-2">
         <!-- left sidebar-->
         <div class="space-y-5 flex-shrink-0 lg:w-7/12">
             {% for post in posts reversed %}
@@ -26,7 +26,7 @@
                 <!-- post image start -->
                 <div class="grid grid-cols-1 justify-items-center">
                     <a href="{{ post.image.url }}">  
-                        <img src="{{ post.image.url }}" class="w-96 h-96 object-cover">
+                        <img src="{{ post.image.url }}" class="w-full object-cover">
                     </a>
                 </div>
                 <!-- post image end -->
