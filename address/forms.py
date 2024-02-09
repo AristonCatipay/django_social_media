@@ -25,3 +25,25 @@ class RegionForm(forms.ModelForm):
                 'placeholder' : "Enter PSGC code",
             }),
         }
+
+class ProvinceForm(forms.ModelForm):
+    class Meta:
+        model = Province
+        fields = ('name', 'province_code', 'psgc_code', 'region')
+        widgets = {
+            'province_code': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+                'placeholder' : "Enter region code",
+            }),
+            'name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+                'placeholder' : "Enter province name",
+            }),
+            'psgc_code': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+                'placeholder' : "Enter PSGC code",
+            }),
+            'region': forms.Select(attrs={
+                'class': SELECT_AREA,
+            }),
+        }
