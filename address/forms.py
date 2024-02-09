@@ -47,3 +47,25 @@ class ProvinceForm(forms.ModelForm):
                 'class': SELECT_AREA,
             }),
         }
+
+class CityMunicipalityForm(forms.ModelForm):
+    class Meta:
+        model = City_Municipality
+        fields = ('name', 'city_municipality_code', 'psgc_code', 'province')
+        widgets = {
+            'city_municipality_code': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+                'placeholder' : "Enter city/municipality code",
+            }),
+            'name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+                'placeholder' : "Enter province name",
+            }),
+            'psgc_code': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+                'placeholder' : "Enter PSGC code",
+            }),
+            'province': forms.Select(attrs={
+                'class': SELECT_AREA,
+            }),
+        }
