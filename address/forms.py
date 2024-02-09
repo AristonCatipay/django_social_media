@@ -69,3 +69,21 @@ class CityMunicipalityForm(forms.ModelForm):
                 'class': SELECT_AREA,
             }),
         }
+
+class BarangayForm(forms.ModelForm):
+    class Meta:
+        model = Barangay
+        fields = ('name', 'barangay_code', 'city_municipality')
+        widgets = {
+            'barangay_code': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+                'placeholder' : "Enter barangay code",
+            }),
+            'name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+                'placeholder' : "Enter barangay name",
+            }),
+            'city_municipality': forms.Select(attrs={
+                'class': SELECT_AREA,
+            }),
+        }
