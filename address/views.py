@@ -53,3 +53,21 @@ def create_province(request):
         'title': 'Create New Province',
         'form': form,
     })
+
+@login_required
+def update_province(request, primary_key):
+    province = get_object_or_404(Province, id = primary_key)
+
+    if request.method == 'POST':
+        form = ProvinceForm(request.POST, instance=province)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successful! Province has been updated.')
+    else: 
+        form = ProvinceForm(instance=province)
+
+    return render(request, 'address/form.html', {
+        'title': 'Edit Province',
+        'form': form,
+    })
