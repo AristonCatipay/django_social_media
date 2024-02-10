@@ -19,3 +19,21 @@ def create_region(request):
         'title': 'Create New Region',
         'form': form,
     })
+
+@login_required
+def update_region(request, primary_key):
+    region = get_object_or_404(Region, id = primary_key)
+
+    if request.method == 'POST':
+        form = RegionForm(request.POST, instance=region)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successful! Region has been updated.')
+    else: 
+        form = RegionForm(instance=region)
+
+    return render(request, 'address/form.html', {
+        'title': 'Edit Region',
+        'form': form,
+    })
