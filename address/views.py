@@ -87,3 +87,21 @@ def create_city_municipality(request):
         'title': 'Create New City Municipality',
         'form': form,
     })
+
+@login_required
+def update_city_municipality(request, primary_key):
+    city_municipality = get_object_or_404(City_Municipality, id = primary_key)
+
+    if request.method == 'POST':
+        form = CityMunicipalityForm(request.POST, instance=city_municipality)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successful! City Municipality has been updated.')
+    else: 
+        form = CityMunicipalityForm(instance=city_municipality)
+
+    return render(request, 'address/form.html', {
+        'title': 'Edit City Municipality',
+        'form': form,
+    })
