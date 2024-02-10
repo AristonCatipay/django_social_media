@@ -105,3 +105,19 @@ def update_city_municipality(request, primary_key):
         'title': 'Edit City Municipality',
         'form': form,
     })
+
+@login_required
+def create_barangay(request):
+    if request.method == 'POST':
+        form = BarangayForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successful! Barangay has been saved.')
+    else:
+        form = BarangayForm()
+    
+    return render(request, 'address/form.html', {
+        'title': 'Create New Barangay',
+        'form': form,
+    })
