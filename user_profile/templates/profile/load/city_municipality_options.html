@@ -1,0 +1,8 @@
+<label for="city_municipality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City or Municipality</label>
+<select name="city_municipality" id="city_municipality" hx-get="{% url 'profile:load_barangay' %}" hx-trigger="change" hx-target="#barangays"
+  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <option selected>Choose a city/municipality</option>
+  {% for city_municipality in city_municipalities %}
+    <option value="{{ city_municipality.pk }}">{{ city_municipality.name }}</option>
+  {% endfor %}
+</select>

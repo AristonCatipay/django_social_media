@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto">
+  <div class="px-4 py-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <form action="." method="POST">
+        {% csrf_token %}
+        <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">{{ title }}</h5>        
+        <div class="mb-4">
+          <label for="region" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Region</label>
+          <select name="region" id="region" hx-get="{% url 'profile:load_province' %}" hx-trigger="change" hx-target="#provinces"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected>Choose a region</option>
+            {% for region in regions %}
+              <option value="{{ region.pk }}">{{ region.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div id="provinces" class="mb-4">
+        {% include 'profile/load/province_options.html' %}
+        </div>
+
+        <div id="city_municipalities" class="mb-4">
+        {% include 'profile/load/city_municipality_options.html' %}
+        </div>
+
+        <div id="barangays" class="mb-4">
+        {% include 'profile/load/barangay_options.html' %}
+        </div>
+
+        <div class="mb-4">
+          <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">BLK/LOT/Building No./Street/Subdivision/Village</label>
+          <div class="flex">
+            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                  <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
+                </svg>
+            </span>
+            <input type="location" name="location" id="location" value="{{ user.profile.location }}" class="rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter address" required>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+  </div>
+</div>
+{% endblock %}

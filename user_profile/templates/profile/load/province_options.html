@@ -1,0 +1,8 @@
+<label for="province" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province</label>
+<select name="province" id="province" hx-get="{% url 'profile:load_city_municipality' %}" hx-trigger="change" hx-target="#city_municipalities"
+  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <option selected>Choose a province</option>
+  {% for province in provinces %}
+    <option value="{{ province.pk }}">{{ province.name }}</option>
+  {% endfor %}
+</select>
