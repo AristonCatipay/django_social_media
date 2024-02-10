@@ -121,3 +121,21 @@ def create_barangay(request):
         'title': 'Create New Barangay',
         'form': form,
     })
+
+@login_required
+def update_barangay(request, primary_key):
+    barangay = get_object_or_404(Barangay, id = primary_key)
+
+    if request.method == 'POST':
+        form = BarangayForm(request.POST, instance=barangay)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successful! Barangay has been updated.')
+    else: 
+        form = BarangayForm(instance=barangay)
+
+    return render(request, 'address/form.html', {
+        'title': 'Edit Barangay',
+        'form': form,
+    })
