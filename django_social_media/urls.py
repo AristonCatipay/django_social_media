@@ -26,4 +26,5 @@ urlpatterns = [
     path('post/', include('post.urls')),
     path('messenger/', include('messenger.urls')),
     path('profile/', include('user_profile.urls')),
+    path('address/', include('address.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
