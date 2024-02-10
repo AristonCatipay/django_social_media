@@ -1,0 +1,7 @@
+<label for="barangay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay</label>
+<select name="barangay" id="barangay" class="rounded-lg bg-violet-50 border border-violet-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-violet-700 dark:border-violet-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <option selected>Choose a barangay</option>
+  {% for barangay in barangays %}
+    <option value="{{ barangay.pk }}">{{ barangay.name }}</option>
+  {% endfor %}
+</select>
