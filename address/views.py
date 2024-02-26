@@ -105,6 +105,13 @@ def update_province(request, primary_key):
     })
 
 @login_required
+def delete_province(request, province_primary_key):
+    province = get_object_or_404(Province, pk=province_primary_key)
+    province.delete()
+    messages.success(request, 'Success! The province has been successfully deleted!')
+    return redirect('address:view_province')
+
+@login_required
 def create_city_municipality(request):
     if request.method == 'POST':
         form = CityMunicipalityForm(request.POST)
