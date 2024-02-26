@@ -165,6 +165,18 @@ def delete_city_municipality(request, city_municipality_primary_key):
     return redirect('province:view_city_municipality')
 
 @login_required
+def view_barangay(request):
+    query = request.GET.get('query', '')
+    barangays = Barangay.objects.all()
+
+    if query:
+        barangays = barangays.filter(Q(name__icontains=query) | Q(barangay_code__icontains=query) | Q(psgc_code__icontains=query))
+    return render(request, 'address/barangay.html', {
+        'title': 'Province',
+        'barangays': barangays,
+    })
+
+@login_required
 def create_barangay(request):
     if request.method == 'POST':
         form = BarangayForm(request.POST)
