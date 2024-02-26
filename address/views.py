@@ -59,6 +59,18 @@ def delete_region(request, region_primary_key):
     return redirect('region:view_region')
 
 @login_required
+def view_province(request):
+    query = request.GET.get('query', '')
+    provinces = Province.objects.all()
+
+    if query:
+        provinces = provinces.filter(Q(name__icontains=query) | Q(province_code__icontains=query) | Q(psgc_code__icontains=query))
+    return render(request, 'address/province.html', {
+        'title': 'Province',
+        'provinces': provinces,
+    })
+
+@login_required
 def create_province(request):
     if request.method == 'POST':
         form = ProvinceForm(request.POST)
