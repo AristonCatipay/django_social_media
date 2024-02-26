@@ -209,3 +209,10 @@ def update_barangay(request, primary_key):
         'title': 'Edit Barangay',
         'form': form,
     })
+
+@login_required
+def delete_barangay(request, barangay_primary_key):
+    barangay = get_object_or_404(Barangay, pk=barangay_primary_key)
+    barangay.delete()
+    messages.success(request, 'Success! The barangay has been successfully deleted!')
+    return redirect('address:view_barangay')

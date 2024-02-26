@@ -19,4 +19,5 @@ urlpatterns = [
     path('barangay/', views.view_barangay, name='view_barangay'),
     path('barangay/create/', views.create_barangay, name='create_barangay'),
     path('barangay/update/<int:primary_key>/', views.update_barangay, name='update_barangay'),
+    path('barangay/delete/<int:barangay_primary_key>/', views.delete_barangay, name='delete_barangay'),
 ]
