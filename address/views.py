@@ -158,6 +158,13 @@ def update_city_municipality(request, primary_key):
     })
 
 @login_required
+def delete_city_municipality(request, city_municipality_primary_key):
+    city_municipality = get_object_or_404(City_Municipality, pk=city_municipality_primary_key)
+    city_municipality.delete()
+    messages.success(request, 'Success! The city_municipality has been successfully deleted!')
+    return redirect('province:view_city_municipality')
+
+@login_required
 def create_barangay(request):
     if request.method == 'POST':
         form = BarangayForm(request.POST)
