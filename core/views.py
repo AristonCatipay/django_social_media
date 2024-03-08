@@ -39,7 +39,7 @@ def signup(request):
                 new_profile.save()
                 # Redirect the user to the settings page.
                 messages.success(request, 'Account created successfully! Welcome to our community.')
-                return redirect('user_profile:update_profile')
+                return redirect('profile:update_profile')
         else: 
             messages.error(request, 'Password don\'t match.')
             return redirect('core:signup')
