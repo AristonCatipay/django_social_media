@@ -15,52 +15,22 @@ To use this application you have to clone this repository using git bash.
 git clone https://github.com/AristonCatipay/django_social_media.git
 ```
 
-### Install Dependencies using `requirements.txt`
-Install project dependencies
+### Install Dependencies
+
+Install Pipenv
 ```bash
-pip install -r requirements
+pip install pipenv
 ```
 
-### Install Dependencies
-Note: If there is an available `requirements.txt` you can skip this.
-
-Activate virtual environment
+Activate Virtual Environment
 ```bash
 pipenv shell
 ```
 
-Install Django
+Install Dependencies
 ```bash
-pipenv install django
+pipenv install
 ```
-
-Install MySQL Client
-```bash
-pipenv install mysqlclient
-```
-
-Install Pillow
-```bash
-pipenv install pillow
-```
-
-Install Tailwind
-```bash
-pipenv install django-tailwind
-```
-
-Install Django Tailwind Reload
-```bash
-pipenv install django-tailwind[reload]
-```
-
-Create a database named 'django_social_media' 
-using your RDMS of choice (in this case using XAMPP Server).
-
-![Create_a_database](/readme_images/xampp_create_database.png)
-
-Edit your database configuration in the settings.py.
-![Database_Configuration](/readme_images/change_database_settings.png)
 
 Migrate
 ```bash
