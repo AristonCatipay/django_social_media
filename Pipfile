@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pillow = "*"
-django-tailwind = {extras = ["reload"], version = "*"}
+django-tailwind = "*"
 django = "*"
 
 [dev-packages]

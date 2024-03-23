@@ -34,8 +34,8 @@ def create_region(request):
     })
 
 @login_required
-def update_region(request, primary_key):
-    region = get_object_or_404(Region, id = primary_key)
+def update_region(request, region_primary_key):
+    region = get_object_or_404(Region, id=region_primary_key)
 
     if request.method == 'POST':
         form = RegionForm(request.POST, instance=region)
