@@ -140,8 +140,8 @@ def create_city_municipality(request):
     })
 
 @login_required
-def update_city_municipality(request, primary_key):
-    city_municipality = get_object_or_404(City_Municipality, id = primary_key)
+def update_city_municipality(request, city_municipality_primary_key):
+    city_municipality = get_object_or_404(City_Municipality, pk=city_municipality_primary_key)
 
     if request.method == 'POST':
         form = CityMunicipalityForm(request.POST, instance=city_municipality)
