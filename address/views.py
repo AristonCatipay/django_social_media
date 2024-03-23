@@ -193,8 +193,8 @@ def create_barangay(request):
     })
 
 @login_required
-def update_barangay(request, primary_key):
-    barangay = get_object_or_404(Barangay, id = primary_key)
+def update_barangay(request, barangay_primary_key):
+    barangay = get_object_or_404(Barangay, pk=barangay_primary_key)
 
     if request.method == 'POST':
         form = BarangayForm(request.POST, instance=barangay)
