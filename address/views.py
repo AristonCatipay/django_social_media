@@ -87,8 +87,8 @@ def create_province(request):
     })
 
 @login_required
-def update_province(request, primary_key):
-    province = get_object_or_404(Province, id = primary_key)
+def update_province(request, province_primary_key):
+    province = get_object_or_404(Province, pk=province_primary_key)
 
     if request.method == 'POST':
         form = ProvinceForm(request.POST, instance=province)
