@@ -39,10 +39,10 @@ If you have multiple installation of python. Choose the python 11.
 pipenv --python path\to\python.exe
 ```
 
-Install Dependencies
+Install Dependencies using the requirements.txt file.
 
 ```bash
-pipenv install
+pip install -r requirements.txt
 ```
 
 Migrate
