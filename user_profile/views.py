@@ -23,14 +23,17 @@ def update_profile(request):
             email = request.POST.get('email')
             gender = request.POST.get('gender')
             bio = request.POST.get('bio')
-            profile_image = request.FILES.get('profile_image')
+            profile_image = request.FILES.get('image')
 
             # Update user profile
             user_profile.bio = bio
             user_profile.gender = gender
+            
             if profile_image:
-                user_profile.profile_image = profile_image
+                user_profile.image = profile_image
+            
             user_profile.save()
+
 
             # Update user model
             user.first_name = first_name
@@ -40,10 +43,11 @@ def update_profile(request):
             user.save()
             messages.success(request, "Profile updated successfully! Your changes have been saved.")
 
-            return redirect('user_profile:update_profile')
+            return redirect('profile:update_profile')
 
         except Exception as e:
             messages.error(request, f"Failed to update profile. {e}")
+    
     return render(request, 'profile/update_profile.html', {
         'title': 'Settings'
     })
