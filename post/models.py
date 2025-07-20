@@ -1,10 +1,18 @@
+import os
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
+def unique_post_image_name(instance, filename):
+    # Generate a random UUID and append to filename
+    ext = filename.split('.')[-1]
+    new_filename = f"{instance.created_by.id}_{uuid.uuid4()}.{ext}"
+    return os.path.join('post_images', new_filename)
+
 class Post(models.Model):
     caption = models.TextField()
-    image = models.ImageField(upload_to='post_images')
+    image = models.ImageField(upload_to=unique_post_image_name)
     no_of_likes = models.IntegerField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
