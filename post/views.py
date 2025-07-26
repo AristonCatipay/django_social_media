@@ -48,6 +48,22 @@ def create_post(request):
         return render(request, 'post/create_post.html', {
             'title': 'Create Post',
         })
+    
+@login_required()
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    # Check if the requesting user is the post creator or a superuser
+    if request.user == post.created_by or request.user.is_superuser:
+        try:
+            post.delete()
+            messages.success(request, 'Post deleted successfully!')
+        except Exception as e:
+            messages.error(request, f'Failed to delete post. {e}')
+    else:
+        messages.error(request, "You don't have permission to delete this post.")
+    
+    return redirect('post:feed')
 
 
 @login_required()
